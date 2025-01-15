@@ -1,5 +1,5 @@
-// src/components/Hero.tsx
-import React, { useState } from 'react';
+// src\components\Hero.tsx
+import  { useState } from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
 import { Link } from 'react-scroll'; // Para la navegación suave
 import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4'; // Verifica que esta ruta sea correcta
@@ -53,7 +53,7 @@ const Hero = () => {
             fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
             transition: 'all 0.3s ease',
             transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-            color: isHovered ? '#ff5733' : 'white',
+           /*  color: isHovered ? '#ff5733' : 'white', */
             textShadow: isHovered ? '5px 5px 20px rgba(0,0,0,0.8)' : '2px 2px 10px rgba(0,0,0,0.7)',
           }}
           onMouseEnter={() => setIsHovered(true)}

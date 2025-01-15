@@ -1,5 +1,5 @@
 // src\components\Services.tsx
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Typography, Card, CardContent, Button, Avatar, Modal, Backdrop, Fade } from '@mui/material';
 import { motion } from 'framer-motion';
@@ -40,7 +40,7 @@ const services = [
   },
 ];
 
-function SampleNextArrow(props) {
+function SampleNextArrow(props:any) {
     const { className, style, onClick } = props;
     return (
       <div

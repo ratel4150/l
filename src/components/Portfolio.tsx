@@ -25,7 +25,7 @@ import {
   Star,
   TrendingUp,
   BugReport,
-  Update,
+  
   FolderOpen,
   Event,
   ExpandMore,

@@ -1,9 +1,7 @@
 // src\components\About.tsx
-import { Helmet } from 'react-helmet';
-import { Box, Container, Typography, Button, Grid } from '@mui/material';
-import { motion } from 'framer-motion';
-import { ImageList, ImageListItem } from '@mui/material';
-import { faker } from '@faker-js/faker';
+
+import { Box, Container, Typography, Grid } from '@mui/material';
+
 
 const AboutUs = () => {
   return (

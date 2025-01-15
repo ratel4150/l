@@ -19,8 +19,10 @@ import {
   useMediaQuery,
   Drawer,
   List,
-  ListItem,
+ 
   ListItemText,
+
+  ListItemButton,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -153,9 +155,9 @@ const App = () => {
         <Box sx={{ width: 250 }}>
           <List>
             {['Inicio', 'Servicios', 'Tecnologías', 'Contacto'].map((text) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
+              <ListItemButton key={text}>
+              <ListItemText primary={text} />
+            </ListItemButton>
             ))}
           </List>
         </Box>

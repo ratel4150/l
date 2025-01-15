@@ -1,11 +1,13 @@
 // src\components\Testimonials.tsx
-import React from 'react';
+
 import { Box, Container, Typography, Card, CardContent, Avatar, Stack, Rating } from '@mui/material';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { faker } from '@faker-js/faker';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import { Helmet } from 'react-helmet';
+
+
 
 const sliderSettings = {
   dots: true,

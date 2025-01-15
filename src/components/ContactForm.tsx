@@ -1,14 +1,14 @@
 // src\components\ContactForm.tsx
 import React, { useState } from 'react';
-import { Box, Container, Grid, TextField, TextareaAutosize, Button, Typography, FormControlLabel, Checkbox, Select, InputLabel, FormControl, MenuItem, Input, InputAdornment } from '@mui/material';
+import { Box, Container, Grid, TextField, TextareaAutosize, Button, Typography,  Select, InputLabel, FormControl, MenuItem} from '@mui/material';
 import emailjs from '@emailjs/browser';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { MuiFileInput } from 'mui-file-input'
+
 import dayjs, { Dayjs } from 'dayjs';
-import { AccountCircle } from '@mui/icons-material';
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 type SubmitStatus = {
     success: boolean;
@@ -296,7 +296,7 @@ const ContactForm = () => {
       });
       
 
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors] = useState({
     name: false,                      // Nombre del usuario
     email: false,                     // Correo electrónico
     phone: false,                     // Número de teléfono
@@ -374,7 +374,7 @@ const ContactForm = () => {
     }));
   };
 
-  const cleanForm = () =>{
+ /*  const cleanForm = () =>{
     return {
         name: '',                      // Nombre del usuario
         email: '',                     // Correo electrónico
@@ -440,9 +440,9 @@ const ContactForm = () => {
         competitionAnalysis: '',       // Análisis de la competencia (si aplica)
         partnerInterest: '',           // Interés en asociaciones con otras empresas
       }
-  }
+  } */
 
-  const validateForm = () => {
+  /* const validateForm = () => {
     let errors = {
         name: false,                      // Nombre del usuario
         email: false,                     // Correo electrónico
@@ -588,7 +588,7 @@ const ContactForm = () => {
     setFormErrors(errors);
 
     return Object.values(errors).every((error) => !error);
-  };
+  }; */
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -671,7 +671,7 @@ const ContactForm = () => {
       );
   
       setSubmitStatus({ success: true, message: 'Tu mensaje ha sido enviado exitosamente.' });
-      setFormData(cleanForm()); // Limpiar el formulario
+     /*  setFormData(cleanForm()); // Limpiar el formulario */
     } catch (error) {
       setSubmitStatus({ success: false, message: 'Hubo un problema al enviar tu mensaje. Intenta nuevamente.' });
       console.error('Error al enviar el correo:', error);
@@ -680,15 +680,7 @@ const ContactForm = () => {
     }
   };
 
-  const handleFileChange = (event:any) => {
-    const file = event.target.files[0]; // Obtiene el primer archivo seleccionado
-   
-    
-    setFormData({
-      ...formData,
-      file: file, // Guarda el archivo en el estado
-    });
-  };
+
   
 
 
