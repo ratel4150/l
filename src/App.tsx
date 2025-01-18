@@ -31,7 +31,7 @@ import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import Testimonials from './components/Testimonials';
 import ContactForm from './components/ContactForm';
-import { AccountCircle, Brightness4, Brightness7, HelpOutline, Settings } from '@mui/icons-material';
+import { AccountCircle, Brightness4, Brightness7} from '@mui/icons-material';
 import Team from './components/Team';
 import { Location } from './components/Location';
 
