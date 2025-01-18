@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-
+import Logo from '../src/assets/Logo-Li.png'
 import { Helmet } from 'react-helmet';
 import Hero from './components/Hero';
 import AboutUs from './components/About';
@@ -65,12 +65,13 @@ const App = () => {
     {label:'Ubicacion',ref:LocationRef}
   ];
   const [darkMode, setDarkMode] = React.useState(false);
+  console.log(darkMode)
  
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          mode: darkMode ? 'dark' : 'light',
+          mode: darkMode ? 'light' : 'dark',
         },
       }),
     [darkMode]
@@ -114,120 +115,155 @@ const App = () => {
       </Helmet>
 
       {/* Header */}
-      <AppBar position="sticky" sx={{ background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)', boxShadow: 3 }}>
-      <Container maxWidth="xl">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {/* Icon Button with Menu */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {isSmallScreen ? (
-              <IconButton color="inherit" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2 }}>
-                <MenuIcon />
-              </IconButton>
-            ) : null}
-            <Typography variant="h6" sx={{ fontWeight: 'bold', color: theme.palette.primary.main }}>
-              Ratel-Nexus
-            </Typography>
-          </Box>
+      <AppBar 
+  position="sticky" 
+  sx={{ 
+    background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)', 
+    boxShadow: 3 
+  }}
+>
+  <Container maxWidth="xl">
+    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      {/* Icon Button with Menu */}
+      <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+        {isSmallScreen ? (
+          <IconButton color="inherit" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+        ) : null}
+        
+        {/* Logo and Title */}
+        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <img 
+            src={Logo} 
+            alt="Logo" 
+            style={{
+              height: '75px',
+              marginRight: '16px',
+              filter: theme.palette.mode === 'light' ? 'invert(1)' : 'none',
+            }} 
+          />
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              fontWeight: 'bold', 
+              color: theme.palette.primary.main,
+              flexGrow: 1, // Ensures the title expands
+              textAlign: isSmallScreen ? 'center' : 'left', // Center for small screens
+            }}
+          >
+            HoneyBadger-Labs
+          </Typography>
+        </Box>
+      </Box>
 
-          {/* Navigation Links with Hover Effects */}
-          {!isSmallScreen ? (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {sections.map((section) => (
-                <Button size='small'
-                  key={section.label}
-                  onClick={() => handleScroll(section.ref)}
-                  sx={{
-                    mx: 1,
-                    color: theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.primary.dark,
-                    '&:hover': {
-                      backgroundColor: theme.palette.action.hover,
-                      transform: 'scale(1.05)',
-                      transition: 'all 0.3s ease-in-out',
-                    },
-                  }}
-                >
-                  {section.label}
-                </Button>
-              ))}
-            </Box>
-          ) : null}
-
-          {/* User Profile & Settings */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title="Perfil">
-              <IconButton color="inherit" onClick={handleMenuOpen}>
-                <AccountCircle />
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              MenuListProps={{
-                'aria-labelledby': 'account-button',
-              }}
+      {/* Navigation Links */}
+      {!isSmallScreen ? (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {sections.map((section) => (
+            <Button 
+              key={section.label}
+              onClick={() => handleScroll(section.ref)}
+              size="small"
               sx={{
-                '& .MuiMenu-paper': {
-                  backgroundColor: theme.palette.background.paper,
-                  borderRadius: '8px',
-                  boxShadow: 3,
+                mx: 1,
+                color: theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.primary.dark,
+                '&:hover': {
+                  backgroundColor: theme.palette.action.hover,
+                  transform: 'scale(1.05)',
+                  transition: 'all 0.3s ease-in-out',
                 },
               }}
             >
-              <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Mis Proyectos</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Configuraciones</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
-            </Menu>
-
-            {/* Dark Mode Toggle */}
-            <Tooltip title="Cambiar Tema">
-              <IconButton color="inherit" onClick={toggleDarkMode}>
-                {darkMode ? <Brightness7 /> : <Brightness4 />}
-              </IconButton>
-            </Tooltip>
-
-            {/* Help Button with Tooltip */}
-            <Tooltip title="Ayuda">
-              <IconButton color="inherit" sx={{ ml: 2 }}>
-                <HelpOutline />
-              </IconButton>
-            </Tooltip>
-
-            {/* Settings Button */}
-            <Tooltip title="Configuraciones">
-              <IconButton color="inherit" sx={{ ml: 2 }}>
-                <Settings />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        </Toolbar>
-      </Container>
-
-      {/* Drawer for Small Screens */}
-      <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
-        <Box sx={{ width: 250 }}>
-          <List>
-            {sections.map((section) => (
-              <ListItemButton key={section.label}  onClick={() => { 
-                handleScroll(section.ref); 
-                setDrawerOpen(false); 
-              }}>
-                <ListItemText
-                  primary={section.label}
-                  primaryTypographyProps={{
-                    style: {
-                      color: theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.text.secondary,
-                    },
-                  }}
-                />
-              </ListItemButton>
-            ))}
-          </List>
+              <Typography>
+              {section.label}
+              </Typography>
+             
+            </Button>
+          ))}
         </Box>
-      </Drawer>
-    </AppBar>
+      ) : null}
+
+      {/* User Profile & Settings */}
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title="Perfil">
+          <IconButton color="inherit" onClick={handleMenuOpen}>
+            <AccountCircle />
+          </IconButton>
+        </Tooltip>
+        
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          MenuListProps={{
+            'aria-labelledby': 'account-button',
+          }}
+          sx={{
+            '& .MuiMenu-paper': {
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: '8px',
+              boxShadow: 3,
+            },
+          }}
+        >
+          <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Mis Proyectos</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Configuraciones</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
+        </Menu>
+
+        {/* Dark Mode Toggle */}
+        <Tooltip title="Cambiar Tema">
+          <IconButton color="inherit" onClick={toggleDarkMode}>
+            {darkMode ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
+        </Tooltip>
+
+        {/* Help Button */}
+    {/*     <Tooltip title="Ayuda">
+          <IconButton color="inherit" sx={{ ml: 2 }}>
+            <HelpOutline />
+          </IconButton>
+        </Tooltip>
+
+        {/* Settings Button */}
+    {/*     <Tooltip title="Configuraciones">
+          <IconButton color="inherit" sx={{ ml: 2 }}>
+            <Settings />
+          </IconButton>
+        </Tooltip>  */}
+      </Box>
+    </Toolbar>
+  </Container>
+
+  {/* Drawer for Small Screens */}
+  <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} >
+    <Box sx={{ width: 250,background:'background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);' }}>
+      <List >
+        {sections.map((section) => (
+          <ListItemButton 
+            key={section.label} 
+            onClick={() => { 
+              handleScroll(section.ref); 
+              setDrawerOpen(false); 
+            }}
+          >
+            <ListItemText
+              primary={section.label}
+              primaryTypographyProps={{
+                style: {
+                  color: theme.palette.mode === 'dark' ? "gray" : theme.palette.text.secondary,
+                },
+              }}
+            />
+          </ListItemButton>
+        ))}
+      </List>
+    </Box>
+  </Drawer>
+</AppBar>
+
 
       {/* Hero Section */}
    <Box ref={HomeRef}>
