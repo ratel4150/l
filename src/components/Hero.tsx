@@ -1,10 +1,12 @@
 // src\components\Hero.tsx
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
-import { Link } from 'react-scroll'; // Para la navegación suave
-import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4'; // Verifica que esta ruta sea correcta
-
+import { Link } from 'react-scroll';
+import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4';
+import { useApiContext } from '../context/ApiContext';
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 const Hero = () => {
+  const { darkMode } = useApiContext(); // Accede a darkMode desde el contexto
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -34,16 +36,13 @@ const Hero = () => {
           zIndex: -1,
         }}
       >
-        {/* Asegúrate de tener múltiples fuentes para asegurar compatibilidad */}
         <source src={IMFSD} type="video/mp4" />
         <source src={IMFSD} type="video/webm" />
-        {/* Puedes agregar más formatos si es necesario */}
         Tu navegador no soporta el video.
       </video>
 
       {/* Contenido de texto */}
       <Container sx={{ zIndex: 1, position: 'relative', textAlign: 'center' }}>
-        {/* Título */}
         <Typography
           variant="h2"
           gutterBottom
@@ -53,7 +52,6 @@ const Hero = () => {
             fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
             transition: 'all 0.3s ease',
             transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-           /*  color: isHovered ? '#ff5733' : 'white', */
             textShadow: isHovered ? '5px 5px 20px rgba(0,0,0,0.8)' : '2px 2px 10px rgba(0,0,0,0.7)',
           }}
           onMouseEnter={() => setIsHovered(true)}
@@ -62,7 +60,6 @@ const Hero = () => {
           Innovación en Desarrollo de Software
         </Typography>
 
-        {/* Descripción */}
         <Typography
           variant="h6"
           paragraph
@@ -76,29 +73,27 @@ const Hero = () => {
           Diseñamos productos digitales que transforman negocios y hacen crecer tu marca.
         </Typography>
 
-        {/* Botón para navegar */}
-        <Link to="section-about"spy={true} 
-      smooth={true} 
-      offset={50} 
-      duration={1}  style={{ textDecoration: 'none' }}>
-          <Button
+        {/* Botón dinámico según darkMode */}
+        <Link to="section-about" spy={true} smooth={true} offset={50} duration={500} style={{ textDecoration: 'none' }}>
+          <Button endIcon={<EmojiObjectsIcon/>}
             variant="contained"
             size="large"
-            color="secondary"
+            color="primary"
             sx={{
               padding: '12px 36px',
               fontSize: '1.2rem',
               borderRadius: '30px',
               boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
+              backgroundColor: darkMode ? 'orange' : '#007BFF', // Color dinámico
               '&:hover': {
-                backgroundColor: '#ff5733',
+                backgroundColor: darkMode ? 'orange' : '#0056b3',
                 boxShadow: '0px 12px 25px rgba(0,0,0,0.4)',
                 transform: 'scale(1.05)',
               },
               transition: 'all 0.3s ease',
             }}
           >
-            ¡Conoce Más!
+            {darkMode ? '¡Conoce Más!' : '¡Conoce Más!'}
           </Button>
         </Link>
       </Container>

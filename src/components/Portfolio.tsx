@@ -40,12 +40,14 @@ import {
   Tooltip as ChartTooltip,
   Legend,
 } from "chart.js";
+import { useApiContext } from "../context/ApiContext";
 
 // Registrar componentes de Chart.js
 ChartJS.register(ArcElement, ChartTooltip, Legend);
 
 function Portfolio() {
   const [projects, setProjects] = React.useState<any[]>([]);
+   const { darkMode } = useApiContext();
 
   React.useEffect(() => {
     const fetchGitHubProjects = async () => {
@@ -115,7 +117,7 @@ function Portfolio() {
       <Box
         sx={{
           py: 6,
-          background: "linear-gradient(to bottom, #f5f7fa, #ffffff)",
+          background:darkMode?'linear-gradient(to right, #232526, #414345)': "linear-gradient(to bottom, #f5f7fa, #ffffff)",
         }}
       >
         <Container>
@@ -129,6 +131,7 @@ function Portfolio() {
               textAlign="center"
               fontWeight="bold"
               gutterBottom
+              sx={{ fontWeight: 'bold', color: darkMode?'orange':'rgb(0, 162, 255)',textShadow:'gray 2px 2px px' }}
             >
               Portafolio de Proyectos
             </Typography>
@@ -136,7 +139,7 @@ function Portfolio() {
               variant="subtitle1"
               textAlign="center"
               color="textSecondary"
-              mb={4}
+              mb={4}  sx={{color:darkMode?'white':'gray'}}
             >
               Proyectos destacados con análisis visual y detalles avanzados.
             </Typography>

@@ -5,13 +5,9 @@ import {
   Box,
   Button,
   Container,
-
   IconButton,
   Toolbar,
   Typography,
- 
-  Menu,
-  MenuItem,
 
   useMediaQuery,
   Drawer,
@@ -20,9 +16,10 @@ import {
   ListItemButton,
   Tooltip,
   createTheme,
+  Divider,
+  ListItemIcon,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import Logo from '../src/assets/Logo-Li.png'
 import { Helmet } from 'react-helmet';
 import Hero from './components/Hero';
@@ -31,11 +28,20 @@ import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import Testimonials from './components/Testimonials';
 import ContactForm from './components/ContactForm';
-import { AccountCircle, Brightness4, Brightness7} from '@mui/icons-material';
+import {  Brightness4, Brightness7} from '@mui/icons-material';
 import Team from './components/Team';
 import { Location } from './components/Location';
-
+import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
+import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
+import DeveloperModeTwoToneIcon from '@mui/icons-material/DeveloperModeTwoTone';
+import AutoStoriesTwoToneIcon from '@mui/icons-material/AutoStoriesTwoTone';
+import ConnectWithoutContactTwoToneIcon from '@mui/icons-material/ConnectWithoutContactTwoTone';
+import Diversity3TwoToneIcon from '@mui/icons-material/Diversity3TwoTone';
+import ContactsTwoToneIcon from '@mui/icons-material/ContactsTwoTone';
+import PersonPinCircleTwoToneIcon from '@mui/icons-material/PersonPinCircleTwoTone';
+import { useApiContext } from './context/ApiContext';
 const App = () => {
+  const { darkMode, toggleDarkMode } = useApiContext(); // Usando el contexto
 
   const HomeRef = React.useRef(null);
   const AboutUsRef = React.useRef(null);
@@ -55,17 +61,16 @@ const App = () => {
 
 
   const sections = [
-    { label: 'Inicio', ref: HomeRef },
-    { label: 'Nosotros', ref: AboutUsRef },
-    { label: 'Servicios', ref: ServicesRef },
-    {label:'Portafolio', ref:PortfolioRef},
-    { label: 'Testimonios', ref: TestimonialsRef },
-    { label: 'Equipo', ref: TeamRef },
-    { label: 'Contacto', ref: contactoRef },
-    {label:'Ubicacion',ref:LocationRef}
+    { label: 'Inicio', ref: HomeRef ,icon:<HomeTwoToneIcon/>},
+    { label: 'Nosotros', ref: AboutUsRef,icon:<NaturePeopleIcon/> },
+    { label: 'Servicios', ref: ServicesRef,icon: <DeveloperModeTwoToneIcon/>},
+    {label:'Portafolio', ref:PortfolioRef,icon:<AutoStoriesTwoToneIcon/>},
+    { label: 'Testimonios', ref: TestimonialsRef,icon :<ConnectWithoutContactTwoToneIcon/> },
+    { label: 'Equipo', ref: TeamRef,icon:<Diversity3TwoToneIcon/> },
+    { label: 'Contacto', ref: contactoRef ,icon:<ContactsTwoToneIcon/>},
+    {label:'Lugar',ref:LocationRef,icon:<PersonPinCircleTwoToneIcon/>}
   ];
-  const [darkMode, setDarkMode] = React.useState(false);
-  console.log(darkMode)
+
  
   const theme = React.useMemo(
     () =>
@@ -77,27 +82,25 @@ const App = () => {
     [darkMode]
   );
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  /* const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null); */
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   
 
-
+/* 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-  };
+  }; */
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
+ 
 
   
  
@@ -118,7 +121,7 @@ const App = () => {
       <AppBar 
   position="sticky" 
   sx={{ 
-    background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)', 
+    background:theme.palette.mode === 'dark'? 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)':' linear-gradient(to right, #000000, #434343)', 
     boxShadow: 3 
   }}
 >
@@ -138,21 +141,28 @@ const App = () => {
             src={Logo} 
             alt="Logo" 
             style={{
-              height: '75px',
+              height: '50px',
               marginRight: '16px',
-              filter: theme.palette.mode === 'light' ? 'invert(1)' : 'none',
+            /*   filter: theme.palette.mode === 'light' ? 'invert(1)' : 'none', */
             }} 
           />
           <Typography 
             variant="h6" 
             sx={{ 
+              fontSize:'1.8rem',
+              fontFamily:'Patua One',
               fontWeight: 'bold', 
-              color: theme.palette.primary.main,
+              color: 'white',
               flexGrow: 1, // Ensures the title expands
               textAlign: isSmallScreen ? 'center' : 'left', // Center for small screens
+      
+            
+
+              
+
             }}
           >
-            HoneyBadger-Labs
+            HB-LABS
           </Typography>
         </Box>
       </Box>
@@ -162,12 +172,13 @@ const App = () => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {sections.map((section) => (
             <Button 
+            startIcon={section.icon}
               key={section.label}
               onClick={() => handleScroll(section.ref)}
               size="small"
               sx={{
                 mx: 1,
-                color: theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.primary.dark,
+                color: theme.palette.mode === 'dark' ? theme.palette.text.primary : 'orange',
                 '&:hover': {
                   backgroundColor: theme.palette.action.hover,
                   transform: 'scale(1.05)',
@@ -175,7 +186,7 @@ const App = () => {
                 },
               }}
             >
-              <Typography>
+              <Typography variant='caption' >
               {section.label}
               </Typography>
              
@@ -186,7 +197,7 @@ const App = () => {
 
       {/* User Profile & Settings */}
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tooltip title="Perfil">
+      {/*   <Tooltip title="Perfil">
           <IconButton color="inherit" onClick={handleMenuOpen}>
             <AccountCircle />
           </IconButton>
@@ -211,11 +222,11 @@ const App = () => {
           <MenuItem onClick={handleMenuClose}>Mis Proyectos</MenuItem>
           <MenuItem onClick={handleMenuClose}>Configuraciones</MenuItem>
           <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
-        </Menu>
+        </Menu> */}
 
         {/* Dark Mode Toggle */}
         <Tooltip title="Cambiar Tema">
-          <IconButton color="inherit" onClick={toggleDarkMode}>
+          <IconButton sx={{color:darkMode?'#ffea00':'#2c387e'}} onClick={toggleDarkMode}>
             {darkMode ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
         </Tooltip>
@@ -238,39 +249,128 @@ const App = () => {
   </Container>
 
   {/* Drawer for Small Screens */}
-  <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} >
-    <Box sx={{ width: 250,background:'background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);' }}>
-      <List >
-        {sections.map((section) => (
-          <ListItemButton 
-            key={section.label} 
-            onClick={() => { 
-              handleScroll(section.ref); 
-              setDrawerOpen(false); 
+  <Drawer
+      anchor="left"
+      open={drawerOpen}
+      onClose={() => setDrawerOpen(false)}
+      transitionDuration={500} // Animación suave
+    >
+      <Box
+        sx={{
+          width: 300,
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          background: theme.palette.mode === "dark"
+            ? "linear-gradient(to top, #3b3b3b 0%, #434343 100%)"
+            : "linear-gradient(to top, #d5d4d0 0%, #eeeeec 100%)",
+          boxShadow: 8,
+        }}
+      >
+        {/* Encabezado */}
+        <Box
+          sx={{
+            padding: 2,
+            textAlign: "center",
+            borderBottom: `1px solid ${
+              theme.palette.mode === "dark"
+                ? theme.palette.divider
+                : theme.palette.grey[300]
+            }`,
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontWeight: "bold",
+              color: theme.palette.mode === "dark" ? "#fff" : "#333",
             }}
           >
-            <ListItemText
-              primary={section.label}
-              primaryTypographyProps={{
-                style: {
-                  color: theme.palette.mode === 'dark' ? "gray" : theme.palette.text.secondary,
-                },
-              }}
-            />
-          </ListItemButton>
-        ))}
-      </List>
-    </Box>
-  </Drawer>
+            Navegación
+          </Typography>
+        </Box>
+
+        {/* Lista de Secciones con Iconos */}
+        <List>
+          {sections.map((section) => (
+            <Tooltip
+              key={section.label}
+              title={section.label}
+              placement="right"
+              arrow
+            >
+              <ListItemButton
+                onClick={() => {
+                  handleScroll(section.ref);
+                  setDrawerOpen(false);
+                }}
+                sx={{
+                  transition: "all 0.3s",
+                  "&:hover": {
+                    background: theme.palette.mode === "dark"
+                      ? "rgba(255, 255, 255, 0.1)"
+                      : "rgba(0, 0, 0, 0.05)",
+                    transform: "scale(1.05)",
+                  },
+                  "&.Mui-selected": {
+                    background: theme.palette.mode === "dark"
+                      ? "rgba(255, 255, 255, 0.2)"
+                      : "rgba(0, 0, 0, 0.1)",
+                  },
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    color:
+                      theme.palette.mode === "dark"
+                        ? theme.palette.primary.light
+                        : theme.palette.primary.main,
+                  }}
+                >
+                  {section.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={section.label}
+                  primaryTypographyProps={{
+                    variant: "body1",
+                    sx: {
+                      color:
+                        theme.palette.mode === "dark"
+                          ? theme.palette.text.secondary
+                          : theme.palette.text.primary,
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </Tooltip>
+          ))}
+        </List>
+
+        {/* Footer */}
+        <Divider />
+        <Box sx={{ padding: 2, textAlign: "center" }}>
+          <Typography
+            variant="caption"
+            sx={{
+              color: theme.palette.text.disabled,
+            }}
+          >
+            © {new Date().getFullYear()} Mi Proyecto
+          </Typography>
+        </Box>
+      </Box>
+    </Drawer>
 </AppBar>
 
 
       {/* Hero Section */}
    <Box ref={HomeRef}>
-   <Hero/>
+   <Hero  />
    </Box>
-    <Box ref={AboutUsRef}>
-    <AboutUs/>
+    <Box ref={AboutUsRef} >
+    <AboutUs />
     </Box>
 
 
