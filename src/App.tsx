@@ -40,6 +40,7 @@ import Diversity3TwoToneIcon from '@mui/icons-material/Diversity3TwoTone';
 import ContactsTwoToneIcon from '@mui/icons-material/ContactsTwoTone';
 import PersonPinCircleTwoToneIcon from '@mui/icons-material/PersonPinCircleTwoTone';
 import { useApiContext } from './context/ApiContext';
+import Footer from './components/Footer';
 const App = () => {
   const { darkMode, toggleDarkMode } = useApiContext(); // Usando el contexto
 
@@ -481,11 +482,8 @@ const App = () => {
 
 
       {/* Footer */}
-      <Box sx={{ backgroundColor: '#333', color: 'white', py: 4 }}>
-        <Container maxWidth="xl">
-          <Typography textAlign="center">&copy; 2025 DevBusiness. Todos los derechos reservados.</Typography>
-        </Container>
-      </Box>
+      
+     <Footer/>
     </div>
   );
 };

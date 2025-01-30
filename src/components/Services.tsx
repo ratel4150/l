@@ -12,6 +12,8 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import DevicesIcon from '@mui/icons-material/Devices';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
 const services = [
   {
     title: "Ciberseguridad",
@@ -34,6 +36,8 @@ const services = [
           "Generar un informe con hallazgos y recomendaciones.",
           "Implementar correcciones en colaboración con el equipo de TI.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20las%20auditor%C3%ADas%20de%20seguridad.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=//https:honeybadger-labs.netlify.app",
       },
       {
         subservice: "Implementación de Firewalls",
@@ -47,6 +51,8 @@ const services = [
           "Configurar reglas personalizadas para proteger contra amenazas específicas.",
           "Realizar pruebas de penetración para garantizar la efectividad.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20la%20implementaci%C3%B3n%20de%20firewalls.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/implementacion-firewalls",
       },
     ],
   },
@@ -73,6 +79,8 @@ const services = [
           "Realizar pruebas en dispositivos físicos y simuladores.",
           "Publicar la aplicación en App Store o Google Play.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20aplicaciones%20nativas%20para%20iOS%20y%20Android.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/aplicaciones-nativas",
       },
       {
         subservice: "Aplicaciones Multiplataforma (Cross-Platform)",
@@ -88,6 +96,8 @@ const services = [
           "Optimizar el rendimiento para dispositivos iOS y Android.",
           "Lanzar la aplicación en las tiendas correspondientes.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20aplicaciones%20multiplataforma.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/aplicaciones-multiplataforma",
       },
       {
         subservice: "Integración con APIs",
@@ -101,6 +111,8 @@ const services = [
           "Implementar autenticación y manejo de errores para las solicitudes.",
           "Realizar pruebas de integración para garantizar la confiabilidad.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20la%20integraci%C3%B3n%20de%20APIs%20para%20aplicaciones%20m%C3%B3viles.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/integracion-con-apis",
       },
     ],
   },
@@ -126,6 +138,8 @@ const services = [
           "Optimizar el sitio para SEO y velocidad.",
           "Realizar pruebas en múltiples navegadores y dispositivos.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20sitios%20web%20corporativos.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/sitios-web-corporativos",
       },
       {
         subservice: "Optimización de Velocidad",
@@ -139,6 +153,8 @@ const services = [
           "Configurar un sistema de cacheo y una CDN.",
           "Optimizar el código y eliminar dependencias innecesarias.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20optimizar%20la%20velocidad%20de%20mi%20sitio%20web.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/optimizacion-de-velocidad",
       },
     ],
   },
@@ -163,6 +179,8 @@ const services = [
           "Integrar bases de datos y APIs empresariales.",
           "Probar en diferentes dispositivos y entornos.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20aplicaciones%20de%20negocios.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/aplicaciones-de-negocios",
       },
       {
         subservice: "Aplicaciones de E-commerce",
@@ -176,10 +194,13 @@ const services = [
           "Implementar características como carrito de compras y seguimiento de pedidos.",
           "Probar funcionalidad en múltiples plataformas.",
         ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20aplicaciones%20de%20e-commerce.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/aplicaciones-de-e-commerce",
       },
     ],
   },
 ];
+
 
 
 
@@ -257,7 +278,7 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Servicios - HoneyBadger-Labs</title>
+        <title>Servicios - HoneyBadgerLabs</title>
         <meta
           name="description"
           content="Descubre los servicios que ofrecemos, como desarrollo web, móvil, DevOps y consultoría."
@@ -283,40 +304,55 @@ const Services = () => {
                 whileHover={{ scale: 1.05, boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)' }}
                 transition={{ duration: 0.3 }}
               >
-                 <Card sx={cardStyles(service, darkMode)}>
-              <Avatar
-                sx={{
-                  mx: 'auto',
-                  mb: 2,
-                  width: 56,
-                  height: 56,
-                  bgcolor: 'white',
-                  color:"gray",
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                }}
-              >
-                {service.icon}
-              </Avatar>
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  {service.title}
-                </Typography>
-                <Typography color="textSecondary" mb={2}>
-                  {service.desc}
-                </Typography>
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    mt: 2,
-                    backgroundColor: darkMode ? 'orange' : 'blue',
-                  }}
-                  onClick={() => handleOpenModal(service)}
-                >
-                  Ver más <ExpandMoreIcon />
-                </Button>
-              </CardContent>
-            </Card>
+              <Card sx={cardStyles(service, darkMode)}>
+  <Avatar
+    sx={{
+      mx: 'auto',
+      mb: 2,
+      width: 56,
+      height: 56,
+      bgcolor: darkMode ? 'gray' : 'white', // Cambia el color de fondo del Avatar en dark mode
+      color: darkMode ? 'white' : 'gray', // Cambia el color del icono según el modo
+      boxShadow: darkMode ? '0 4px 10px rgba(0,0,0,0.5)' : '0 4px 10px rgba(0,0,0,0.1)', // Más sombra en dark mode
+    }}
+  >
+    {service.icon}
+  </Avatar>
+  <CardContent>
+    <Typography
+      variant="h5"
+      gutterBottom
+      sx={{
+        color: darkMode ? 'white' : 'black', // Cambia el color del título en dark mode
+      }}
+    >
+      {service.title}
+    </Typography>
+    <Typography
+      color="textSecondary"
+      mb={2}
+      sx={{
+        color: darkMode ? 'lightgray' : 'textSecondary', // Cambia el color de la descripción
+      }}
+    >
+      {service.desc}
+    </Typography>
+    <Button
+      variant="contained"
+      size="small"
+      sx={{
+        mt: 2,
+        backgroundColor: darkMode ? 'orange' : 'blue', // Colores de fondo para el botón
+        '&:hover': {
+          backgroundColor: darkMode ? 'darkorange' : 'darkblue', // Efecto hover
+        },
+      }}
+      onClick={() => handleOpenModal(service)}
+    >
+      Ver más <ExpandMoreIcon />
+    </Button>
+  </CardContent>
+</Card>
               </motion.div>
             ))}
           </Slider>
@@ -348,8 +384,7 @@ const Services = () => {
         maxWidth: "600px",
         maxHeight: "90vh",
         overflowY: "auto",
-        backgroundColor: darkMode?'black':'white',
-      
+        backgroundColor: darkMode ? "#303132" : "white",
       }}
     >
       <Typography variant="h5" gutterBottom>
@@ -357,10 +392,12 @@ const Services = () => {
       </Typography>
 
       {/* Stepper */}
-      <Stepper activeStep={activeStep} sx={{ marginBottom: 3 ,color:darkMode?'white':'gray'}}>
+      <Stepper activeStep={activeStep} sx={{ marginBottom: 3, color: darkMode ? "white" : "gray" }}>
         {selectedService?.detailedInfo?.map((info: any, index: any) => (
-          <Step sx={{ marginBottom: 3 ,color:darkMode?'white':'gray'}} key={index}>
-            <StepLabel sx={{ marginBottom: 3 ,color:darkMode?'white':'gray'}}>{info.subservice}</StepLabel>
+          <Step sx={{ marginBottom: 3, color: darkMode ? "white" : "gray" }} key={index}>
+            <StepLabel sx={{ marginBottom: 3, color: darkMode ? "white" : "gray" }}>
+              {info.subservice}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
@@ -368,77 +405,99 @@ const Services = () => {
       {/* Step Content */}
       {selectedService?.detailedInfo && selectedService.detailedInfo[activeStep] && (
         <Box sx={{ marginBottom: 3 }}>
-          <Typography variant="h6" gutterBottom sx={{color:darkMode?'orange':'gray'}}>
+          <Typography variant="h6" gutterBottom sx={{ color: darkMode ? "orange" : "gray" }}>
             {selectedService.detailedInfo[activeStep].subservice}
           </Typography>
-          <Typography variant="body2" mb={1} sx={{color:darkMode?'white':'gray'}}>
+          <Typography variant="body2" mb={1} sx={{ color: darkMode ? "white" : "gray" }}>
             {selectedService.detailedInfo[activeStep].description}
           </Typography>
-          <Typography variant="caption" color="textSecondary" mb={1} display="block" sx={{color:darkMode?'white':'gray'}}>
+          <Typography variant="caption" color="textSecondary" mb={1} display="block" sx={{ color: darkMode ? "white" : "gray" }}>
             Estimado:{" "}
-            <Box
-              component="span"
-              sx={{ color: "green", fontWeight: "bold" }}
-            >
+            <Box component="span" sx={{ color: "green", fontWeight: "bold" }}>
               {selectedService.detailedInfo[activeStep].estimatedPrice}
             </Box>
           </Typography>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}>
-            {selectedService.detailedInfo[activeStep].tools.map(
-              (tool: any, index: any) => (
-                <Chip key={index} label={tool} variant="filled" sx={{color:darkMode?'white':'black',backgroundColor:darkMode?'orange':'lightgray'}} />
-              )
-            )}
+            {selectedService.detailedInfo[activeStep].tools.map((tool: any, index: any) => (
+              <Chip
+                key={index}
+                label={tool}
+                variant="filled"
+                sx={{ color: darkMode ? "white" : "black", backgroundColor: darkMode ? "orange" : "lightgray" }}
+              />
+            ))}
           </Box>
-          <Typography variant="subtitle2" gutterBottom sx={{color:darkMode?'white':'gray'}}>
+          <Typography variant="subtitle2" gutterBottom sx={{ color: darkMode ? "white" : "gray" }}>
             Pasos:
           </Typography>
           <List>
-            {selectedService.detailedInfo[activeStep].steps.map(
-              (step: any, stepIndex: any) => (
-                <ListItem key={stepIndex} disableGutters>
-                  <ListItemIcon>
-                    <Box
-                      sx={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: "50%",
-                        backgroundColor: darkMode?'orange':'blue',
-                        color: "white",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "0.875rem",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {stepIndex + 1}
-                    </Box>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography variant="body2" color="textPrimary" sx={{color:darkMode?'white':'gray'}}>
-                        {step}
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              )
-            )}
+            {selectedService.detailedInfo[activeStep].steps.map((step: any, stepIndex: any) => (
+              <ListItem key={stepIndex} disableGutters>
+                <ListItemIcon>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      borderRadius: "50%",
+                      backgroundColor: darkMode ? "orange" : "blue",
+                      color: "white",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "0.875rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {stepIndex + 1}
+                  </Box>
+                </ListItemIcon>
+                <ListItemText
+                  primary={<Typography variant="body2" color="textPrimary" sx={{ color: darkMode ? "white" : "gray" }}>{step}</Typography>}
+                />
+              </ListItem>
+            ))}
           </List>
         </Box>
       )}
 
+      {/* Redes sociales (WhatsApp & Facebook Share) */}
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 2, marginTop: 3, mb: 3 }}>
+        <Button
+          variant="contained"
+          color="success"
+          startIcon={<WhatsAppIcon />}
+          size="small"  // Tamaño pequeño
+          onClick={() => {
+            const whatsappUrl = `https://wa.me/525637303010?text=¡Hola! Estoy interesado en el servicio de ${selectedService?.title} y sus subservicios.`;
+            window.open(whatsappUrl, "_blank");
+          }}
+        >
+          WhatsApp
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<FacebookIcon />}
+          size="small"  // Tamaño pequeño
+          onClick={() => {
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=¡Mira este servicio! ${selectedService?.title}`;
+            window.open(facebookUrl, "_blank");
+          }}
+        >
+          Compartir en Facebook
+        </Button>
+      </Box>
+
       {/* Stepper Navigation */}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button startIcon={<ArrowCircleLeftIcon/>} disabled={activeStep === 0} onClick={handleBack}>
+        <Button startIcon={<ArrowCircleLeftIcon />} disabled={activeStep === 0} onClick={handleBack}>
           Atrás
         </Button>
-        <Button startIcon={<ArrowCircleRightIcon/>}
+        <Button
+          startIcon={<ArrowCircleRightIcon />}
           variant="contained"
           onClick={() => {
             if (activeStep === selectedService?.detailedInfo?.length - 1) {
-              // Resetear los pasos y cerrar el modal
               setActiveStep(0);
               handleCloseModal();
             } else {
@@ -446,14 +505,13 @@ const Services = () => {
             }
           }}
         >
-          {activeStep === selectedService?.detailedInfo?.length - 1
-            ? "Finalizar"
-            : "Siguiente"}
+          {activeStep === selectedService?.detailedInfo?.length - 1 ? "Finalizar" : "Siguiente"}
         </Button>
       </Box>
     </Box>
   </Fade>
-</Modal>;
+</Modal>
+
     </>
   );
 };

@@ -1,15 +1,17 @@
 // src\components\ContactForm.tsx
 import React, { useState } from 'react';
-import { Box, Container, Grid, TextField, TextareaAutosize, Button, Typography,  Select, InputLabel, FormControl, MenuItem} from '@mui/material';
+import { Box, Container, Grid, TextField,  Button, Typography,   MenuItem, Autocomplete} from '@mui/material';
 import emailjs from '@emailjs/browser';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import dayjs, { Dayjs } from 'dayjs';
+
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useApiContext } from '../context/ApiContext';
+import dayjs from 'dayjs';
 type SubmitStatus = {
     success: boolean;
     message: string;
@@ -201,7 +203,23 @@ type SubmitStatus = {
     "Rwanda",
     "Saint Helena",
   ];
+  const opciones: Record<string, string> = {
+    'social-media': 'Redes sociales',
+    'word-of-mouth': 'Boca a boca',
+    'online-advertising': 'Publicidad en línea',
+    'search-engine': 'Motor de búsqueda',
+    event: 'Evento',
+  };
 
+  const servicios = {
+    'web-development': 'Desarrollo web',
+    'technical-support': 'Soporte técnico',
+    consulting: 'Consultoría',
+    'mobile-development': 'Desarrollo móvil',
+    'custom-software': 'Software a medida',
+  } as const;
+  
+  type ServicioKey = keyof typeof servicios;
   const currencies = [
   // Monedas más usadas en el mundo
   { value: 'USD', label: '$ - US Dollar' },        // Dólar estadounidense
@@ -228,6 +246,7 @@ type SubmitStatus = {
   { value: 'CRC', label: '₡ - Costa Rican Colon' }, // Colón costarricense
 ];
 const ContactForm = () => {
+  const { darkMode } = useApiContext();
     const [formData, setFormData] = useState({
         currency:'',                   //Moneda
         name: '',                      // Nombre del usuario
@@ -685,12 +704,12 @@ const ContactForm = () => {
 
 
   return (
-    <Box sx={{ py: 8, backgroundColor: '#F4F7FA', minHeight: '100vh' }}>
+    <Box sx={{ py: 8, background:darkMode?'linear-gradient(to right, #232526, #414345)': '#f9f9f9', minHeight: '100vh' }}>
       <Container maxWidth="lg">
-        <Typography variant="h4" textAlign="center" gutterBottom fontWeight="bold" sx={{ color: '#2196f3' }}>
+        <Typography variant="h4" textAlign="center" gutterBottom fontWeight="bold" sx={{ color: darkMode?'orange':'rgb(0, 162, 255)' }}>
           Contáctanos
         </Typography>
-        <Typography variant="body1" textAlign="center" mb={4} color="textSecondary">
+        <Typography variant="body1" textAlign="center" mb={4} sx={{color:darkMode?'white':'gray'}}>
           ¿Tienes preguntas o deseas más información? Completa el siguiente formulario, y nuestro equipo se pondrá en contacto contigo pronto.
         </Typography>
 
@@ -708,9 +727,37 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="name"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+          
           },
         }}
       />
@@ -729,9 +776,37 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="email"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+          
           },
         }}
       />
@@ -746,9 +821,37 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="phone"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+           
           },
         }}
       />
@@ -763,111 +866,188 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="subject"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+         
           },
         }}
       />
     </Grid>
     
     <Grid item xs={12} sm={3}>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DateTimePicker  
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <DateTimePicker
       label="Fecha de contacto"
-      value={formData.contactDate ? dayjs(formData.contactDate) : null}  // Asegúrate de convertirlo a Dayjs
-      onChange={(newValue: Dayjs | null) => handleInputChange({ target: { name: 'contactDate', value: newValue ? newValue.toISOString() : '' } })} // Asegúrate de convertirlo a un string adecuado
-     
-    />
-  </LocalizationProvider>
-
-  
-    </Grid>
-    <Grid item xs={12} sm={3}>
-    <FormControl fullWidth variant="outlined">
-    <InputLabel id="contact-preference-label" sx={{ color: '#2196f3' }}>
-      Preferencia de contacto
-    </InputLabel>
-    <Select
-      labelId="contact-preference-label"
-      label="Preferencia de contacto"
-      value={formData.contactPreference}
-      onChange={handleInputChange}
-      name="contactPreference"
-      sx={{
-        '& .MuiOutlinedInput-root': {
-          '&:focus': { borderColor: '#2196f3' },
+      value={formData.contactDate ? dayjs(formData.contactDate) : null}
+      onChange={(newValue) =>
+        handleInputChange({
+          target: { name: 'contactDate', value: newValue ? newValue.toISOString() : '' },
+        })
+      }
+      slotProps={{
+        textField: {
+          fullWidth: true,
+          variant: "outlined",
+          error: !!formErrors.contactDate,
+          helperText: formErrors.contactDate ? "Este campo es obligatorio" : "",
+          sx: {
+            "& .MuiInputLabel-root": { color: darkMode ? "orange" : "#2196f3" },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: darkMode ? "orange" : "#2196f3" },
+              "&:hover fieldset": { borderColor: darkMode ? "orange" : "#1976d2" },
+              "&.Mui-focused fieldset": { borderColor: darkMode ? "orange" : "#1976d2" },
+            },
+            "& .MuiInputBase-input": { color: darkMode ? "white" : "black" },
+          },
         },
       }}
-    >
-      <MenuItem value="email">Correo electrónico</MenuItem>
-      <MenuItem value="phone">Teléfono</MenuItem>
-      <MenuItem value="whatsapp">WhatsApp</MenuItem>
-      <MenuItem value="sms">SMS</MenuItem>
-    </Select>
-  </FormControl>
-    </Grid>
+    />
+  </LocalizationProvider>
+</Grid>
+   
 
-    <Grid item xs={12} sm={3}>
-    <FormControl fullWidth variant="outlined">
-      <InputLabel id="service-required-label" sx={{ color: '#2196f3' }}>
-        Servicio requerido
-      </InputLabel>
-      <Select
-        labelId="service-required-label"
+<Grid item xs={12} sm={3}>
+  <Autocomplete
+    options={Object.entries(servicios).map(([value, label]) => ({ value, label }))}
+    getOptionLabel={(option) => option.label}
+    value={
+      formData.serviceRequired && servicios[formData.serviceRequired as ServicioKey]
+        ? { label: servicios[formData.serviceRequired as ServicioKey], value: formData.serviceRequired }
+        : null
+    }
+    onChange={(_, newValue) => {
+      handleInputChange({
+        target: { name: 'serviceRequired', value: newValue ? newValue.value : '' },
+      });
+    }}
+    renderInput={(params) => (
+      <TextField
+        {...params}
         label="Servicio requerido"
-        value={formData.serviceRequired}
-        onChange={handleInputChange}
+        variant="outlined"
+        fullWidth
         name="serviceRequired"
+        error={!!formErrors.serviceRequired}
+        helperText={formErrors.serviceRequired && 'Este campo es obligatorio'}
         sx={{
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            borderRadius: '12px',
+            backgroundColor: darkMode ? '#333' : '#fff',
+            '& fieldset': {
+              borderWidth: '2px',
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? 'orange' : '#2196f3',
+            },
+            '&:hover fieldset': {
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? '#ff9800' : '#1976d2',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? '#ffcc80' : '#0d47a1',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: formErrors.howDidYouHear ? 'red' : darkMode ? 'orange' : '#2196f3',
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black',
           },
         }}
-      >
-        <MenuItem value="web-development">Desarrollo web</MenuItem>
-        <MenuItem value="technical-support">Soporte técnico</MenuItem>
-        <MenuItem value="consulting">Consultoría</MenuItem>
-        <MenuItem value="mobile-development">Desarrollo móvil</MenuItem>
-        <MenuItem value="custom-software">Software a medida</MenuItem>
-      </Select>
-    </FormControl>
-  </Grid>
+      />
+    )}
+  />
+</Grid>
 
   <Grid item xs={12} sm={3}>
-    <FormControl fullWidth variant="outlined">
-      <InputLabel id="how-did-you-hear-label" sx={{ color: '#2196f3' }}>
-        ¿Cómo nos escuchaste?
-      </InputLabel>
-      <Select
-        labelId="how-did-you-hear-label"
+  <Autocomplete
+    options={[
+      { label: 'Redes sociales', value: 'social-media' },
+      { label: 'Boca a boca', value: 'word-of-mouth' },
+      { label: 'Publicidad en línea', value: 'online-advertising' },
+      { label: 'Motor de búsqueda', value: 'search-engine' },
+      { label: 'Evento', value: 'event' },
+    ]}
+    getOptionLabel={(option) => option.label}
+    value={
+      formData.howDidYouHear
+        ? { label: opciones[formData.howDidYouHear], value: formData.howDidYouHear }
+        : null
+    }
+    onChange={(_, newValue) => {
+      handleInputChange({
+        target: { name: 'howDidYouHear', value: newValue ? newValue.value : '' },
+      });
+    }}
+    renderInput={(params) => (
+      <TextField
+        {...params}
         label="¿Cómo nos escuchaste?"
-        value={formData.howDidYouHear}
-        onChange={handleInputChange}
+        variant="outlined"
+        fullWidth
         name="howDidYouHear"
+        error={!!formErrors.howDidYouHear}
+        helperText={formErrors.howDidYouHear && 'Este campo es obligatorio'}
         sx={{
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            borderRadius: '12px',
+            backgroundColor: darkMode ? '#333' : '#fff',
+            '& fieldset': {
+              borderWidth: '2px',
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? 'orange' : '#2196f3',
+            },
+            '&:hover fieldset': {
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? '#ff9800' : '#1976d2',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: formErrors.howDidYouHear ? 'red' : darkMode ? '#ffcc80' : '#0d47a1',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: formErrors.howDidYouHear ? 'red' : darkMode ? 'orange' : '#2196f3',
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black',
           },
         }}
-      >
-        <MenuItem value="social-media">Redes sociales</MenuItem>
-        <MenuItem value="word-of-mouth">Boca a boca</MenuItem>
-        <MenuItem value="online-advertising">Publicidad en línea</MenuItem>
-        <MenuItem value="search-engine">Motor de búsqueda</MenuItem>
-        <MenuItem value="event">Evento</MenuItem>
-      </Select>
-    </FormControl>
-  </Grid>
+      />
+    )}
+  />
+</Grid>
   <Grid item xs={12}>
   <Button
   variant="contained"
   component="label"
   startIcon={<CloudUploadIcon />}
   sx={{
-    backgroundColor: "#2196f3",
-    color: "#fff",
-    "&:hover": { backgroundColor: "#1976d2" },
+    backgroundColor: darkMode ? "orange" : "#2196f3",  // Cambia el color según el modo oscuro
+    color: darkMode ? "#fff" : "#fff",  // El texto sigue siendo blanco en ambos modos
+    "&:hover": { backgroundColor: darkMode ? "orange" : "#1976d2" },  // Hover para ambos modos
     padding: "10px 20px",
     textTransform: "none",
     fontSize: "16px",
@@ -878,10 +1058,10 @@ const ContactForm = () => {
     type="file"
     hidden
     onChange={(e) => {
-        if (e.target.files && e.target.files[0]) {
-          handleInputChange(e.target.files[0]);
-        }
-      }}
+      if (e.target.files && e.target.files[0]) {
+        handleInputChange(e.target.files[0]);
+      }
+    }}
   />
 </Button>
 </Grid>;
@@ -896,52 +1076,142 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="servicePriority"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+      
           },
         }}
       />
     </Grid>
-
     <Grid item xs={12}>
-      <TextareaAutosize
-        minRows={6}
-        placeholder="Tu mensaje"
-        style={{
-          width: '100%',
-          padding: '12px',
-          borderRadius: '8px',
-          border: formErrors.message ? '2px solid red' : '1px solid #ccc',
-          fontSize: '16px',
-          transition: 'all 0.3s ease',
-          boxShadow: formErrors.message ? '0px 0px 5px rgba(255, 0, 0, 0.5)' : 'none',
-        }}
-        value={formData.message}
-        onChange={handleInputChange}
-        name="message"
-      />
-      {formErrors.message && <Typography variant="body2" color="error">Este campo es obligatorio</Typography>}
-    </Grid>
+  <TextField
+    label="Tu mensaje"
+    variant="outlined"
+    fullWidth
+    multiline
+    minRows={6}
+    value={formData.message}
+    onChange={handleInputChange}
+    name="message"
+    error={!!formErrors.message}
+    helperText={formErrors.message && "Este campo es obligatorio"}
+    sx={{
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: formErrors.message
+        ? '0px 0px 10px rgba(255, 0, 0, 0.6)' // Sombra en caso de error
+        : darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: formErrors.message ? 'red' : darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+        fontWeight: 'bold',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: formErrors.message ? 'red' : darkMode ? 'orange' : '#2196f3', // Color del borde
+        },
+        '&:hover fieldset': {
+          borderColor: formErrors.message ? 'red' : darkMode ? '#ff9800' : '#1976d2', // Color al hacer hover
+          boxShadow: formErrors.message
+            ? '0px 0px 12px rgba(255, 0, 0, 0.8)'
+            : darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: formErrors.message ? 'red' : darkMode ? '#ffcc80' : '#0d47a1', // Color al enfocar
+          boxShadow: formErrors.message
+            ? '0px 0px 14px rgba(255, 0, 0, 0.9)'
+            : darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto ingresado
+      },
+    }}
+  />
+</Grid>
   
   {/* Campo de Presupuesto Estimado */}
   <Grid item xs={8}>
-    <TextField
-      label="Presupuesto Estimado"
-      variant="outlined"
-      fullWidth
-      value={formData.estimatedBudget}
-      onChange={handleInputChange}
-      name="estimatedBudget"
-      type="number"
-      sx={{
-        '& .MuiInputLabel-root': { color: '#2196f3' },
-        '& .MuiOutlinedInput-root': {
-          '&:hover fieldset': { borderColor: '#2196f3' },
+  <TextField
+    label="Presupuesto Estimado"
+    variant="outlined"
+    fullWidth
+    value={formData.estimatedBudget}
+    onChange={handleInputChange}
+    name="estimatedBudget"
+    type="number"
+    sx={{
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+        
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
         },
-      }}
-    />
-  </Grid>
+        '&:hover fieldset': {
+          borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+          boxShadow: darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+          boxShadow: darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto ingresado
+        fontWeight: 'bold',
+      },
+    }}
+  />
+</Grid>
+
 
   {/* Selección de Moneda */}
   <Grid item xs={4}>
@@ -954,10 +1224,39 @@ const ContactForm = () => {
     onChange={handleInputChange}
     name="currency"
     sx={{
-      '& .MuiInputLabel-root': { color: '#2196f3' },
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+        fontWeight: 'bold',
+      },
       '& .MuiOutlinedInput-root': {
-        '&:hover fieldset': { borderColor: '#2196f3' },
-        '&.Mui-focused fieldset': { borderColor: '#2196f3' },
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+        },
+        '&:hover fieldset': {
+          borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+          boxShadow: darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+          boxShadow: darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiSelect-icon': {
+        color: darkMode ? 'orange' : '#2196f3', // Color del ícono del Select
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto seleccionado
       },
     }}
   >
@@ -970,26 +1269,60 @@ const ContactForm = () => {
 </Grid>
 
 
-    <Grid item xs={12} sm={6}>
-      <FormControl fullWidth>
-        <InputLabel sx={{ color: '#2196f3' }}>País</InputLabel>
-        <Select
-          value={formData.country}
-          onChange={handleInputChange}
-          name="country"
-          sx={{
-            '& .MuiInputLabel-root': { color: '#2196f3' },
-            '& .MuiOutlinedInput-root:hover': { borderColor: '#2196f3' },
-          }}
-        >
-          {countries.map((country) => (
-            <MenuItem key={country} value={country}>
-              {country}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Grid>
+<Grid item xs={12} sm={6}>
+  <TextField
+    select
+    label="País"
+    variant="outlined"
+    fullWidth
+    value={formData.country}
+    onChange={handleInputChange}
+    name="country"
+    sx={{
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+        fontWeight: 'bold',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+        },
+        '&:hover fieldset': {
+          borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+          boxShadow: darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+          boxShadow: darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiSelect-icon': {
+        color: darkMode ? 'orange' : '#2196f3', // Color del ícono del Select
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto seleccionado
+      },
+    }}
+  >
+    {countries.map((country) => (
+      <MenuItem key={country} value={country}>
+        {country}
+      </MenuItem>
+    ))}
+  </TextField>
+</Grid>
+
 
     <Grid item xs={12}>
       <TextField
@@ -1000,9 +1333,37 @@ const ContactForm = () => {
         onChange={handleInputChange}
         name="projectDescription"
         sx={{
-          '& .MuiInputLabel-root': { color: '#2196f3' },
+          borderRadius: '12px', // Bordes redondeados
+          backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+          transition: 'all 0.3s ease-in-out', // Transición suave
+          boxShadow: darkMode
+            ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+            : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+          '& .MuiInputLabel-root': {
+            color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+            
+          },
           '& .MuiOutlinedInput-root': {
-            '&:focus': { borderColor: '#2196f3' },
+            '& fieldset': {
+              borderWidth: '2px', // Grosor del borde
+              borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
+            },
+            '&:hover fieldset': {
+              borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+              boxShadow: darkMode
+                ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+                : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+              boxShadow: darkMode
+                ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+                : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+            },
+          },
+          '& .MuiInputBase-input': {
+            color: darkMode ? 'white' : 'black', // Color del texto ingresado
+          
           },
         }}
       />
@@ -1017,11 +1378,38 @@ const ContactForm = () => {
     onChange={handleInputChange}
     name="preferredDevelopmentMethod"
     sx={{
-      '& .MuiInputLabel-root': { color: '#2196f3' },
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+      },
       '& .MuiOutlinedInput-root': {
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#2196f3',
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
         },
+        '&:hover fieldset': {
+          borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+          boxShadow: darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+          boxShadow: darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto ingresado
+      },
+      '& .MuiSelect-icon': {
+        color: darkMode ? 'orange' : '#2196f3', // Color del ícono del Select
       },
     }}
   >
@@ -1053,11 +1441,38 @@ const ContactForm = () => {
     onChange={handleInputChange}
     name="paymentMethod"
     sx={{
-      '& .MuiInputLabel-root': { color: '#2196f3' },
+      borderRadius: '12px', // Bordes redondeados
+      backgroundColor: darkMode ? '#333' : '#fff', // Fondo según el modo
+      transition: 'all 0.3s ease-in-out', // Transición suave
+      boxShadow: darkMode
+        ? '0px 0px 10px rgba(255, 165, 0, 0.6)'
+        : '0px 0px 10px rgba(33, 150, 243, 0.6)', // Sombra del contorno
+      '& .MuiInputLabel-root': {
+        color: darkMode ? 'orange' : '#2196f3', // Color de la etiqueta
+      },
       '& .MuiOutlinedInput-root': {
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#2196f3',
+        '& fieldset': {
+          borderWidth: '2px', // Grosor del borde
+          borderColor: darkMode ? 'orange' : '#2196f3', // Color del borde
         },
+        '&:hover fieldset': {
+          borderColor: darkMode ? '#ff9800' : '#1976d2', // Color del borde al pasar el cursor
+          boxShadow: darkMode
+            ? '0px 0px 12px rgba(255, 152, 0, 0.8)'
+            : '0px 0px 12px rgba(25, 118, 210, 0.8)', // Sombra al hacer hover
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: darkMode ? '#ffcc80' : '#0d47a1', // Color del borde cuando está enfocado
+          boxShadow: darkMode
+            ? '0px 0px 14px rgba(255, 200, 120, 0.9)'
+            : '0px 0px 14px rgba(13, 71, 161, 0.9)', // Sombra al enfocar
+        },
+      },
+      '& .MuiInputBase-input': {
+        color: darkMode ? 'white' : 'black', // Color del texto ingresado
+      },
+      '& .MuiSelect-icon': {
+        color: darkMode ? 'orange' : '#2196f3', // Color del ícono del Select
       },
     }}
   >
@@ -1071,7 +1486,7 @@ const ContactForm = () => {
       'Pago Móvil',
       'Apple Pay',
       'Google Pay',
-      'Otro'
+      'Otro',
     ].map((method) => (
       <MenuItem key={method} value={method}>
         {method}
@@ -1110,25 +1525,29 @@ const ContactForm = () => {
       />
     </Grid> */}
 
-    <Grid item xs={12} textAlign="center">
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        type="submit"
-        sx={{
-          mt: 3,
-          borderRadius: '8px',
-          padding: '12px 40px',
-          textTransform: 'none',
-          boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.1)',
-          '&:hover': { backgroundColor: '#1976d2', boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.2)' },
-        }}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Enviando..." : "Enviar"}
-      </Button>
-    </Grid>
+<Grid item xs={12} textAlign="center">
+  <Button
+    variant="contained"
+    color="primary"
+    size="large"
+    type="submit"
+    sx={{
+      mt: 3,
+      borderRadius: '8px',
+      padding: '12px 40px',
+      textTransform: 'none',
+      boxShadow: darkMode ? '0px 6px 20px rgba(255, 255, 255, 0.1)' : '0px 6px 20px rgba(0, 0, 0, 0.1)',
+      backgroundColor: darkMode ? 'orange' : '#1976d2', // Cambiar el color base según el modo
+      '&:hover': {
+        backgroundColor: darkMode ? 'orange' : '#2196f3', // Cambiar el color de hover según el modo
+        boxShadow: darkMode ? '0px 10px 30px rgba(255, 255, 255, 0.2)' : '0px 10px 30px rgba(0, 0, 0, 0.2)',
+      },
+    }}
+    disabled={isSubmitting}
+  >
+    {isSubmitting ? "Enviando..." : "Enviar"}
+  </Button>
+</Grid>
 
     {submitStatus && (
       <Grid item xs={12} textAlign="center" sx={{ mt: 4 }}>

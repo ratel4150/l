@@ -1,10 +1,12 @@
 // src\components\Hero.tsx
 import { useState } from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
-import { Link } from 'react-scroll';
+
 import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4';
 import { useApiContext } from '../context/ApiContext';
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+
+import PhoneIcon from '@mui/icons-material/Phone'; // Icono para la acción de llamada
+
 const Hero = () => {
   const { darkMode } = useApiContext(); // Accede a darkMode desde el contexto
   const [isHovered, setIsHovered] = useState(false);
@@ -74,11 +76,46 @@ const Hero = () => {
         </Typography>
 
         {/* Botón dinámico según darkMode */}
-        <Link to="section-about" spy={true} smooth={true} offset={50} duration={500} style={{ textDecoration: 'none' }}>
-          <Button endIcon={<EmojiObjectsIcon/>}
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 3 }}>
+       {/*    <Link
+            to="section-about"
+            spy={true}
+            smooth={true}
+            offset={50}
+            duration={500}
+            style={{ textDecoration: 'none' }}
+          >
+            <Button
+              endIcon={<EmojiObjectsIcon />}
+              variant="contained"
+              size="large"
+              color="primary"
+              sx={{
+                padding: '12px 36px',
+                fontSize: '1.2rem',
+                borderRadius: '30px',
+                boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
+                backgroundColor: darkMode ? 'orange' : '#007BFF', // Color dinámico
+                '&:hover': {
+                  backgroundColor: darkMode ? 'orange' : '#0056b3',
+                  boxShadow: '0px 12px 25px rgba(0,0,0,0.4)',
+                  transform: 'scale(1.05)',
+                },
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {darkMode ? '¡Conoce Más!' : '¡Conoce Más!'}
+            </Button>
+          </Link> */}
+
+          {/* Botón de llamada */}
+          <Button
+           target="_blank"
+  rel="noopener noreferrer"
+            href="https://wa.me/525637303010?text=Hola,%20estoy%20muy%20interesado%20en%20sus%20servicios.%20Me%20gustaría%20recibir%20más%20información%20sobre%20los%20paquetes%20que%20ofrecen,%20así%20como%20asesoría%20para%20mi%20proyecto.%20Gracias!"
+            startIcon={<PhoneIcon />}
             variant="contained"
             size="large"
-            color="primary"
             sx={{
               padding: '12px 36px',
               fontSize: '1.2rem',
@@ -93,9 +130,9 @@ const Hero = () => {
               transition: 'all 0.3s ease',
             }}
           >
-            {darkMode ? '¡Conoce Más!' : '¡Conoce Más!'}
+            Envia Whats App
           </Button>
-        </Link>
+        </Box>
       </Container>
     </Box>
   );

@@ -7,31 +7,19 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Chip,
   Container,
   Divider,
   Grid,
-  Tooltip,
   Typography,
   LinearProgress,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import {
   GitHub,
   Share,
-  Star,
-  TrendingUp,
   BugReport,
-  
   FolderOpen,
   Event,
-  ExpandMore,
-  Error,
-  Warning,
-  CheckCircle,
 } from "@mui/icons-material";
 import { Pie } from "react-chartjs-2";
 import {
@@ -48,6 +36,8 @@ ChartJS.register(ArcElement, ChartTooltip, Legend);
 function Portfolio() {
   const [projects, setProjects] = React.useState<any[]>([]);
    const { darkMode } = useApiContext();
+   console.log(projects);
+   
 
   React.useEffect(() => {
     const fetchGitHubProjects = async () => {
@@ -94,13 +84,21 @@ function Portfolio() {
       {
         label: "Lenguajes",
         data: project.languages.map(() => Math.random() * 100),
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
-        ],
+        backgroundColor: darkMode
+        ? [
+            "#FF6384", // Rosa
+            "#36A2EB", // Azul
+            "#FFCE56", // Amarillo
+            "#4BC0C0", // Turquesa
+            "#9966FF", // Morado
+          ]
+        : [
+            "#FF8A80", // Rosa claro
+            "#64B5F6", // Azul claro
+            "#FFD54F", // Amarillo claro
+            "#4DB6AC", // Turquesa claro
+            "#BA68C8", // Morado claro
+          ],
       },
     ],
   });
@@ -153,35 +151,40 @@ function Portfolio() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 * index, duration: 0.5 }}
                 >
- <Card
+<Card
   sx={{
-    position: "relative", // Permite posicionar elementos dentro del Card
+    position: "relative",
     borderRadius: 4,
-    boxShadow: "0px 6px 15px rgba(0,0,0,0.1)",
+    boxShadow: darkMode
+      ? "0px 6px 15px rgba(0,0,0,0.1)"
+      : "0px 6px 15px rgba(255,255,255,0.5)",
+    transition: "transform 0.3s, box-shadow 0.3s",
     "&:hover": {
       transform: "translateY(-5px)",
       boxShadow: "0px 15px 25px rgba(0,0,0,0.2)",
     },
   }}
 >
+  {/* Imagen del proyecto */}
   <CardMedia
     component="img"
     height="180"
-    image="https://anincubator.com/wp-content/uploads/2022/08/Diferencias-entre-la-app-mo%CC%81vil-y-la-app-web.png"
+    image={project.image || "default-image.jpg"}
     alt={project.name}
     sx={{ borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
   />
-  {/* Gráfica en esquina superior derecha */}
+
+  {/* Pie chart en esquina superior derecha */}
   <Box
     sx={{
       position: "absolute",
-      top: 8, // Ajuste desde la parte superior
-      right: 8, // Ajuste desde la parte derecha
-      width: 80, // Tamaño de la gráfica
+      top: 8,
+      right: 8,
+      width: 80,
       height: 80,
-      backgroundColor: "rgba(255, 255, 255, 0.9)", // Fondo semitransparente
-      borderRadius: "50%", // Circular
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Sombra
+      backgroundColor: "rgba(255, 255, 255, 0.9)",
+      borderRadius: "50%",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -192,268 +195,140 @@ function Portfolio() {
       options={{
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }, // Oculta la leyenda
-        },
+        plugins: { legend: { display: false } },
       }}
-      style={{
-        maxWidth: "100%", // Asegura que encaje en el contenedor
-        maxHeight: "100%",
-      }}
+      style={{ maxWidth: "100%", maxHeight: "100%" }}
     />
   </Box>
-  <CardContent sx={{ p: 2, bgcolor: "background.paper", borderRadius: 2, boxShadow: 3 }}>
-  {/* Encabezado con ícono personalizado */}
-  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-    <FolderOpen sx={{ fontSize: 24, color: "primary.main", mr: 1 }} />
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: 500,
-        color: "text.primary",
-        textTransform: "capitalize",
-        letterSpacing: 0.5,
-        fontSize: "1rem",
-      }}
-    >
-      {project.name}
-    </Typography>
-  </Box>
 
-  {/* Descripción del proyecto */}
-  <Typography
-    variant="body2"
-    sx={{
-      mb: 2,
-      color: project.description ? "text.secondary" : "grey.500",
-      fontSize: "0.875rem",
-      fontStyle: project.description ? "normal" : "italic",
-    }}
-  >
-    {project.description || "Este proyecto aún no tiene descripción."}
-  </Typography>
-
-  <Divider sx={{ mb: 2, bgcolor: "grey.300" }} />
-
-  {/* Barra de progreso con porcentaje */}
-  <Box sx={{ mb: 2 }}>
-    <Typography variant="caption" color="textSecondary" sx={{ fontSize: "0.75rem" }}>
-      Progreso Estimado
-    </Typography>
-    <Box sx={{ position: "relative" }}>
-      {/* Barra de progreso con color condicional y animación */}
-      <LinearProgress
-        variant="determinate"
-        value={project.progress}
+  {/* Contenido del card */}
+  <CardContent sx={{ p: 3 }}>
+    {/* Encabezado */}
+    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+      <FolderOpen sx={{ fontSize: 24, color: "primary.main", mr: 1 }} />
+      <Typography
+        variant="h6"
         sx={{
-          mt: 1,
-          height: 10,
-          borderRadius: 6,
-          bgcolor: "grey.200",
-          transition: "width 1s ease-out",
-          "& .MuiLinearProgress-bar": {
-            bgcolor:
-              project.progress < 30
-                ? "error.main"
-                : project.progress < 70
-                ? "warning.main"
-                : "success.main",
-            borderRadius: 6,
-          },
-        }}
-      />
-      {/* Número de porcentaje con sombra y animación */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: "0.875rem",
-          fontWeight: 600,
-          color: "primary.contrastText",
-          textShadow: "0px 0px 5px rgba(0, 0, 0, 0.7)",
+          fontWeight: 500,
+          color: "text.primary",
+          textTransform: "capitalize",
         }}
       >
-        {`${Math.round(project.progress)}%`}
+        {project.name}
+      </Typography>
+    </Box>
+
+    {/* Descripción */}
+    <Typography
+      variant="body2"
+      sx={{
+        mb: 2,
+        color: project.description ? "text.secondary" : "grey.500",
+        fontStyle: project.description ? "normal" : "italic",
+      }}
+    >
+      {project.description || "Este proyecto aún no tiene descripción."}
+    </Typography>
+
+    <Divider sx={{ mb: 2 }} />
+
+    {/* Barra de progreso */}
+    <Box sx={{ mb: 2 }}>
+      <Typography variant="caption" color="text.secondary">
+        Progreso Estimado
+      </Typography>
+      <Box sx={{ position: "relative", mt: 1 }}>
+        <LinearProgress
+          variant="determinate"
+          value={project.progress}
+          sx={{
+            height: 10,
+            borderRadius: 6,
+            bgcolor: "grey.200",
+            "& .MuiLinearProgress-bar": {
+              bgcolor:
+                project.progress < 30
+                  ? "error.main"
+                  : project.progress < 70
+                  ? "warning.main"
+                  : "success.main",
+            },
+          }}
+        />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontWeight: 600,
+            color: "text.primary",
+          }}
+        >
+          {`${Math.round(project.progress)}%`}
+        </Box>
       </Box>
     </Box>
 
-    {/* Estado de progreso con íconos y mensaje */}
-    <Box sx={{ mt: 1, display: "flex", alignItems: "center" }}>
-      <Typography variant="body2" sx={{ fontSize: "0.75rem", color: "text.secondary" }}>
-        Estado:{" "}
-      </Typography>
-      {project.progress < 30 && (
-        <Tooltip title="Bajo progreso" arrow>
-          <Error sx={{ fontSize: 20, color: "error.main", ml: 1 }} />
-        </Tooltip>
-      )}
-      {project.progress >= 30 && project.progress < 70 && (
-        <Tooltip title="En progreso" arrow>
-          <Warning sx={{ fontSize: 20, color: "warning.main", ml: 1 }} />
-        </Tooltip>
-      )}
-      {project.progress >= 70 && (
-        <Tooltip title="Casi completado" arrow>
-          <CheckCircle sx={{ fontSize: 20, color: "success.main", ml: 1 }} />
-        </Tooltip>
-      )}
-    </Box>
-  </Box>
-
-  {/* Estadísticas clave */}
-  <Grid container spacing={2} sx={{ mb: 2 }}>
-    <Grid item xs={6}>
-      <Box>
-        <Typography variant="caption" color="textSecondary" sx={{ fontSize: "0.75rem" }}>
+    {/* Estadísticas clave */}
+    <Grid container spacing={2} sx={{ mb: 2 }}>
+      <Grid item xs={6}>
+        <Typography variant="caption" color="text.secondary">
           Última Actualización
         </Typography>
         <Typography
           variant="body2"
-          sx={{
-            fontWeight: 600,
-            display: "flex",
-            alignItems: "center",
-            fontSize: "0.875rem",
-            color: "info.main",
-          }}
+          sx={{ display: "flex", alignItems: "center", color: "info.main" }}
         >
           <Event sx={{ fontSize: 20, mr: 1 }} />
           {new Date(project.updated_at).toLocaleDateString()}
         </Typography>
-      </Box>
-    </Grid>
-    <Grid item xs={6}>
-      <Box>
-        <Typography variant="caption" color="textSecondary" sx={{ fontSize: "0.75rem" }}>
+      </Grid>
+      <Grid item xs={6}>
+        <Typography variant="caption" color="text.secondary">
           Issues Abiertas
         </Typography>
         <Typography
           variant="body2"
           sx={{
-            fontWeight: 600,
-            color: project.open_issues_count > 0 ? "error.main" : "success.main",
             display: "flex",
             alignItems: "center",
-            fontSize: "0.875rem",
+            color: project.open_issues_count > 0 ? "error.main" : "success.main",
           }}
         >
           <BugReport sx={{ fontSize: 20, mr: 1 }} />
           {project.open_issues_count}
         </Typography>
-      </Box>
+      </Grid>
     </Grid>
-  </Grid>
 
-  <Divider sx={{ mb: 2, bgcolor: "grey.300" }} />
+    <Divider sx={{ mb: 2 }} />
 
-  {/* Botones de acción compactos */}
-  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-    <Tooltip title="Ver en GitHub">
+    {/* Botones de acción */}
+    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Button
         variant="contained"
         color="primary"
         size="small"
         startIcon={<GitHub />}
         onClick={() => window.open(project.html_url, "_blank")}
-        sx={{
-          borderRadius: 2,
-          px: 2,
-          fontSize: "0.75rem",
-          height: 30,
-        }}
+        sx={{ borderRadius: 2 }}
       >
         GitHub
       </Button>
-    </Tooltip>
-    <Tooltip title="Compartir proyecto">
       <Button
         variant="outlined"
         color="secondary"
         size="small"
         startIcon={<Share />}
-        sx={{
-          borderRadius: 2,
-          px: 2,
-          fontSize: "0.75rem",
-          height: 30,
-        }}
+        sx={{ borderRadius: 2 }}
       >
         Compartir
       </Button>
-    </Tooltip>
-  </Box>
-
-  {/* Estadísticas adicionales */}
-  <Grid container spacing={2} sx={{ mb: 2 }}>
-    <Grid item xs={6}>
-      <Chip
-        label={`⭐ ${project.stargazers_count.toLocaleString()}`}
-        icon={<Star />}
-        color="primary"
-        sx={{
-          fontSize: "0.75rem",
-          px: 2,
-          py: 1.25,
-          fontWeight: 600,
-          height: 30,
-        }}
-      />
-    </Grid>
-    <Grid item xs={6}>
-      <Chip
-        label={`🔗 ${project.forks_count.toLocaleString()}`}
-        icon={<TrendingUp />}
-        color="success"
-        sx={{
-          fontSize: "0.75rem",
-          px: 2,
-          py: 1.25,
-          fontWeight: 600,
-          height: 30,
-        }}
-      />
-    </Grid>
-  </Grid>
-
-  {/* Información extendida en acordeón */}
-  <Accordion sx={{ mt: 2, bgcolor: "grey.50", borderRadius: 3 }}>
-    <AccordionSummary
-      expandIcon={<ExpandMore />}
-      aria-controls="panel1a-content"
-      id="panel1a-header"
-    >
-      <Typography variant="body2" sx={{ fontWeight: 600, fontSize: "0.875rem" }}>
-        Detalles
-      </Typography>
-    </AccordionSummary>
-    <AccordionDetails>
-      <Typography
-        variant="body2"
-        sx={{
-          color: "text.secondary",
-          lineHeight: 1.6,
-          fontSize: "0.875rem",
-          letterSpacing: 0.3,
-        }}
-      >
-        Este repositorio se centra en optimizar la colaboración y escalabilidad a través de pruebas automatizadas, integración continua (CI/CD) y documentación exhaustiva. La seguridad y el monitoreo son elementos clave del proyecto para garantizar la integridad y calidad a largo plazo.
-      </Typography>
-    </AccordionDetails>
-  </Accordion>
-</CardContent>
-
-  
-
-
-
-
-
-
-
-
+    </Box>
+  </CardContent>
 </Card>
+
 
                 </motion.div>
               </Grid>
