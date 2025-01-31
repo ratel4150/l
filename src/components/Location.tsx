@@ -1,5 +1,5 @@
 // src\components\Location.tsx
-import { Box, Typography, Grid, CardContent, Divider, Avatar, Paper } from "@mui/material";
+import { Box, Typography, Grid, CardContent, Divider, Avatar, Paper, useMediaQuery } from "@mui/material";
 import { StaticGoogleMap, Marker } from "react-static-google-map";
 import PlaceIcon from "@mui/icons-material/Place";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -7,17 +7,20 @@ import EmailIcon from "@mui/icons-material/Email";
 import { useApiContext } from "../context/ApiContext";
 
 export const Location = () => {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const isMediumScreen = useMediaQuery("(max-width:960px)");
+  const mapSize = isSmallScreen ? "320x280" : isMediumScreen ? "450x350" : "500x400";
   const { darkMode } = useApiContext();
   const googleMapsApiKey = "AIzaSyBzS-HWVRYys3QHH8U5ICgHAlK-QATogZk";
 
   const locations = [
     {
       name: "Oficina Central",
-      address: "123 Main Street, Nueva York, NY 10001, EE.UU.",
-      phone: "+1 212-555-1234",
-      email: "contact@devbusiness.com",
-      latitude: 40.712776,
-      longitude: -74.005974,
+      address: "Cuernavaca numero 32,Valle Ceylan,Tlalnepantla de Baz,Edo.Mex",
+      phone: "+525637303010",
+      email: "honeybadgerlabs@protonmail.com",
+      latitude: 19.5404411,
+      longitude: -99.1787453,
       icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
     },
     {
@@ -54,11 +57,11 @@ export const Location = () => {
       <Grid container spacing={4} justifyContent="center">
         {/* Sección del Mapa */}
         <Grid item xs={12} md={6} display="flex" justifyContent="center">
-          <StaticGoogleMap size="500x400" apiKey={googleMapsApiKey} zoom="4">
-            {locations.map((loc, index) => (
-              <Marker key={index} location={`${loc.latitude},${loc.longitude}`} />
-            ))}
-          </StaticGoogleMap>
+          <StaticGoogleMap size={mapSize} apiKey={googleMapsApiKey} zoom="11">
+        {locations.map((loc, index) => (
+          <Marker key={index} location={`${loc.latitude},${loc.longitude}`} />
+        ))}
+      </StaticGoogleMap>
         </Grid>
 
         {/* Sección de Información */}
