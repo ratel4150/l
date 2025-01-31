@@ -4,6 +4,7 @@ import { StaticGoogleMap, Marker } from "react-static-google-map";
 import PlaceIcon from "@mui/icons-material/Place";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
+import Logo from '../assets/Logo-Li.png'
 import { useApiContext } from "../context/ApiContext";
 
 export const Location = () => {
@@ -17,7 +18,7 @@ export const Location = () => {
     {
       name: "Oficina Central",
       address: "Cuernavaca numero 32,Valle Ceylan,Tlalnepantla de Baz,Edo.Mex",
-      phone: "+525637303010",
+      phone: "+52-56-37-30-30-10",
       email: "honeybadgerlabs@protonmail.com",
       latitude: 19.5404411,
       longitude: -99.1787453,
@@ -82,12 +83,12 @@ export const Location = () => {
               <CardContent>
                 <Box display="flex" alignItems="center" mb={2}>
                   <Avatar
-                    src={loc.icon}
+                    src={Logo}
                     sx={{
                       width: 56,
                       height: 56,
                       mr: 2,
-                      bgcolor: "white",
+                      bgcolor: "black",
                       border: "2px solid #ddd",
                     }}
                   />

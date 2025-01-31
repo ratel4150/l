@@ -1537,15 +1537,38 @@ const ContactForm = () => {
       padding: '12px 40px',
       textTransform: 'none',
       boxShadow: darkMode ? '0px 6px 20px rgba(255, 255, 255, 0.1)' : '0px 6px 20px rgba(0, 0, 0, 0.1)',
-      backgroundColor: darkMode ? 'orange' : '#1976d2', // Cambiar el color base según el modo
+      backgroundColor: darkMode ? 'orange' : '#1976d2',
       '&:hover': {
-        backgroundColor: darkMode ? 'orange' : '#2196f3', // Cambiar el color de hover según el modo
+        backgroundColor: darkMode ? 'orange' : '#2196f3',
         boxShadow: darkMode ? '0px 10px 30px rgba(255, 255, 255, 0.2)' : '0px 10px 30px rgba(0, 0, 0, 0.2)',
       },
     }}
     disabled={isSubmitting}
   >
     {isSubmitting ? "Enviando..." : "Enviar"}
+  </Button>
+
+  {/* Botón de llamada */}
+  <Button
+    variant="contained"
+    color="secondary"
+    size="large"
+    sx={{
+      mt: 2,
+      ml: 2,
+      borderRadius: '8px',
+      padding: '12px 40px',
+      textTransform: 'none',
+      backgroundColor: darkMode ? '#ff5722' : '#4caf50',
+      boxShadow: darkMode ? '0px 6px 20px rgba(255, 255, 255, 0.1)' : '0px 6px 20px rgba(0, 0, 0, 0.1)',
+      '&:hover': {
+        backgroundColor: darkMode ? '#ff7043' : '#45a049',
+        boxShadow: darkMode ? '0px 10px 30px rgba(255, 255, 255, 0.2)' : '0px 10px 30px rgba(0, 0, 0, 0.2)',
+      },
+    }}
+    href="tel:+1234567890" // Reemplaza con el número de teléfono real
+  >
+    Llamar 📞
   </Button>
 </Grid>
 
@@ -1560,11 +1583,11 @@ const ContactForm = () => {
 </form>
 
 
-        <Box sx={{ textAlign: 'center', mt: 6, borderTop: '2px solid #2196f3', paddingTop: 4 }}>
+      {/*   <Box sx={{ textAlign: 'center', mt: 6, borderTop: '2px solid #2196f3', paddingTop: 4 }}>
           <Typography variant="body2" color="textSecondary">
             ¿Prefieres llamarnos? Llámanos al <strong>(+52) 56-3730-3010</strong>
           </Typography>
-        </Box>
+        </Box> */}
 
       
       </Container>
