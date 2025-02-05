@@ -41,6 +41,7 @@ import ContactsTwoToneIcon from '@mui/icons-material/ContactsTwoTone';
 import PersonPinCircleTwoToneIcon from '@mui/icons-material/PersonPinCircleTwoTone';
 import { useApiContext } from './context/ApiContext';
 import Footer from './components/Footer';
+import ReactPixel from 'react-facebook-pixel';
 const App = () => {
   const { darkMode, toggleDarkMode } = useApiContext(); // Usando el contexto
 
@@ -104,8 +105,11 @@ const App = () => {
  
 
   
- 
- 
+  React.useEffect(() => {
+    ReactPixel.init('2439676643041584'); // Inicializa el píxel
+    ReactPixel.pageView(); // Rastrea la vista de página
+  }, []);
+
   
 
   return (
