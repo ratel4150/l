@@ -110,7 +110,9 @@ const App = () => {
     ReactPixel.pageView(); // Rastrea la vista de página
   }, []);
 
-  
+  const trackEvent = (eventName: string, eventData?: Record<string, any>) => {
+    ReactPixel.track(eventName, eventData);
+  };
 
   return (
     <div>
@@ -371,9 +373,9 @@ const App = () => {
 
 
       {/* Hero Section */}
-   <Box ref={HomeRef}>
-   <Hero  />
-   </Box>
+      <Box ref={HomeRef}>
+  <Hero trackEvent={trackEvent} /> {/* Pasa la función como prop */}
+</Box>
     <Box ref={AboutUsRef} >
     <AboutUs />
     </Box>

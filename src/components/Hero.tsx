@@ -6,8 +6,10 @@ import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4';
 import { useApiContext } from '../context/ApiContext';
 
 import PhoneIcon from '@mui/icons-material/Phone'; // Icono para la acción de llamada
-
-const Hero = () => {
+interface HeroProps {
+  trackEvent: (eventName: string, eventData?: Record<string, any>) => void;
+}
+const Hero = ({ trackEvent }: HeroProps) => {
   const { darkMode } = useApiContext(); // Accede a darkMode desde el contexto
   const [isHovered, setIsHovered] = useState(false);
 
@@ -110,6 +112,7 @@ const Hero = () => {
 
           {/* Botón de llamada */}
           <Button
+           onClick={() => trackEvent('Contact')}
            target="_blank"
   rel="noopener noreferrer"
             href="https://wa.me/525637303010?text=Hola,%20estoy%20muy%20interesado%20en%20sus%20servicios.%20Me%20gustaría%20recibir%20más%20información%20sobre%20los%20paquetes%20que%20ofrecen,%20así%20como%20asesoría%20para%20mi%20proyecto.%20Gracias!"
