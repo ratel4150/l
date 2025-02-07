@@ -1,0 +1,26 @@
+# robots.txt para https://honeybadger-labs.netlify.app/
+
+# Reglas para todos los rastreadores
+User-agent: *
+Allow: /                # Permite el acceso a la raíz del sitio
+Disallow: /admin        # Bloquea el acceso a la ruta /admin
+Disallow: /private      # Bloquea el acceso a la ruta /private
+Disallow: /tmp          # Bloquea el acceso a la ruta /tmp
+Disallow: /search       # Bloquea el acceso a la ruta /search (si existe)
+
+# Reglas específicas para Googlebot (rastreador de Google)
+User-agent: Googlebot
+Allow: /blog            # Permite el acceso a la ruta /blog
+Disallow: /drafts       # Bloquea el acceso a la ruta /drafts
+
+# Reglas específicas para Bingbot (rastreador de Bing)
+User-agent: Bingbot
+Allow: /services        # Permite el acceso a la ruta /services
+Disallow: /test         # Bloquea el acceso a la ruta /test
+
+# Reglas para otros rastreadores
+User-agent: Yandex
+Disallow: /secret       # Bloquea el acceso a la ruta /secret
+
+# Especifica la ubicación del sitemap
+Sitemap: https://honeybadger-labs.netlify.app/sitemap.xml

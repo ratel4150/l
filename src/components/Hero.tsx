@@ -1,17 +1,66 @@
 // src\components\Hero.tsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
-
+import { motion, useAnimation } from 'framer-motion';
 import IMFSD from '../assets/4974708-hd_1920_1080_25fps.mp4';
 import { useApiContext } from '../context/ApiContext';
 
 import PhoneIcon from '@mui/icons-material/Phone'; // Icono para la acción de llamada
+import { Helmet } from 'react-helmet';
 interface HeroProps {
   trackEvent: (eventName: string, eventData?: Record<string, any>) => void;
 }
+
 const Hero = ({ trackEvent }: HeroProps) => {
-  const { darkMode } = useApiContext(); // Accede a darkMode desde el contexto
+  const { darkMode } = useApiContext();
   const [isHovered, setIsHovered] = useState(false);
+  const controls = useAnimation();
+
+  // Rastrear evento 'ViewContent' cuando el componente se monta
+  React.useEffect(() => {
+    trackEvent('ViewContent', {
+      content_name: 'Hero Section',
+      content_category: 'Homepage',
+    });
+  }, [trackEvent]);
+
+  // Rastrear evento 'Hover' cuando el usuario pasa el mouse sobre el título
+  React.useEffect(() => {
+    if (isHovered) {
+      trackEvent('Hover', {
+        element: 'Hero Title',
+        action: 'Hovered',
+      });
+    }
+  }, [isHovered, trackEvent]);
+
+  // Rastrear evento 'Scroll' cuando el usuario hace scroll en la sección Hero
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        trackEvent('Scroll', {
+          section: 'Hero',
+          scroll_position: scrollY,
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [trackEvent]);
+
+  // Manejo del clic en el botón de WhatsApp
+  const handleButtonClick = () => {
+    trackEvent('Contact', {
+      action: 'WhatsApp Button Clicked',
+      method: 'Click',
+    });
+    window.open(
+      'https://wa.me/525637303010?text=Hola,%20estoy%20muy%20interesado%20en%20sus%20servicios.%20Me%20gustaría%20recibir%20más%20información%20sobre%20los%20paquetes%20que%20ofrecen,%20así%20como%20asesoría%20para%20mi%20proyecto.%20Gracias!',
+      '_blank'
+    );
+  };
 
   return (
     <Box
@@ -24,6 +73,27 @@ const Hero = ({ trackEvent }: HeroProps) => {
         overflow: 'hidden',
       }}
     >
+            {/* React Helmet para SEO */}
+            <Helmet>
+        <title>HoneyBadger Labs | Innovación en Desarrollo de Software</title>
+        <meta
+          name="description"
+          content="Diseñamos productos digitales que transforman negocios y hacen crecer tu marca. Contáctanos para más información."
+        />
+        <meta
+          name="keywords"
+          content="desarrollo de software, innovación, productos digitales, transformación de negocios"
+        />
+        <meta name="author" content="HoneyBadger Labs" />
+        <meta property="og:title" content="HoneyBadger Labs | Innovación en Desarrollo de Software" />
+        <meta
+          property="og:description"
+          content="Diseñamos productos digitales que transforman negocios y hacen crecer tu marca."
+        />
+        <meta property="og:image" content="https://honeybadger-labs.netlify.app/logo.png" />
+        <meta property="og:url" content="https://honeybadger-labs.netlify.app/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {/* Fondo de video */}
       <video
         autoPlay
@@ -47,22 +117,24 @@ const Hero = ({ trackEvent }: HeroProps) => {
 
       {/* Contenido de texto */}
       <Container sx={{ zIndex: 1, position: 'relative', textAlign: 'center' }}>
-        <Typography
-          variant="h2"
-          gutterBottom
-          sx={{
-            fontWeight: 'bold',
-            color: 'white',
-            fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
-            transition: 'all 0.3s ease',
-            transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-            textShadow: isHovered ? '5px 5px 20px rgba(0,0,0,0.8)' : '2px 2px 10px rgba(0,0,0,0.7)',
-          }}
+        <motion.div
+          animate={controls}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          Innovación en Desarrollo de Software
-        </Typography>
+          <Typography
+            variant="h2"
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+              color: 'white',
+              fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+              transition: 'all 0.3s ease',
+            }}
+          >
+            Innovación en Desarrollo de Software
+          </Typography>
+        </motion.div>
 
         <Typography
           variant="h6"
@@ -77,54 +149,19 @@ const Hero = ({ trackEvent }: HeroProps) => {
           Diseñamos productos digitales que transforman negocios y hacen crecer tu marca.
         </Typography>
 
-        {/* Botón dinámico según darkMode */}
+        {/* Botón de WhatsApp */}
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 3 }}>
-       {/*    <Link
-            to="section-about"
-            spy={true}
-            smooth={true}
-            offset={50}
-            duration={500}
-            style={{ textDecoration: 'none' }}
-          >
-            <Button
-              endIcon={<EmojiObjectsIcon />}
-              variant="contained"
-              size="large"
-              color="primary"
-              sx={{
-                padding: '12px 36px',
-                fontSize: '1.2rem',
-                borderRadius: '30px',
-                boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
-                backgroundColor: darkMode ? 'orange' : '#007BFF', // Color dinámico
-                '&:hover': {
-                  backgroundColor: darkMode ? 'orange' : '#0056b3',
-                  boxShadow: '0px 12px 25px rgba(0,0,0,0.4)',
-                  transform: 'scale(1.05)',
-                },
-                transition: 'all 0.3s ease',
-              }}
-            >
-              {darkMode ? '¡Conoce Más!' : '¡Conoce Más!'}
-            </Button>
-          </Link> */}
-
-          {/* Botón de llamada */}
           <Button
-           onClick={() => trackEvent('Contact')}
-           target="_blank"
-  rel="noopener noreferrer"
-            href="https://wa.me/525637303010?text=Hola,%20estoy%20muy%20interesado%20en%20sus%20servicios.%20Me%20gustaría%20recibir%20más%20información%20sobre%20los%20paquetes%20que%20ofrecen,%20así%20como%20asesoría%20para%20mi%20proyecto.%20Gracias!"
             startIcon={<PhoneIcon />}
             variant="contained"
             size="large"
+            onClick={handleButtonClick}
             sx={{
               padding: '12px 36px',
               fontSize: '1.2rem',
               borderRadius: '30px',
               boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
-              backgroundColor: darkMode ? 'orange' : '#007BFF', // Color dinámico
+              backgroundColor: darkMode ? 'orange' : '#007BFF',
               '&:hover': {
                 backgroundColor: darkMode ? 'orange' : '#0056b3',
                 boxShadow: '0px 12px 25px rgba(0,0,0,0.4)',
@@ -140,5 +177,4 @@ const Hero = ({ trackEvent }: HeroProps) => {
     </Box>
   );
 };
-
 export default Hero;
