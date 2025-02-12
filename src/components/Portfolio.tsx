@@ -38,7 +38,14 @@ function Portfolio() {
    const { darkMode } = useApiContext();
    console.log(projects);
    
-
+   const fictitiousImages = [
+    "https://picsum.photos/200/300?random=1",
+    "https://picsum.photos/200/300?random=2",
+    "https://picsum.photos/200/300?random=3",
+    "https://picsum.photos/200/300?random=4",
+    "https://picsum.photos/200/300?random=5",
+    "https://picsum.photos/200/300?random=6"
+  ];
   React.useEffect(() => {
     const fetchGitHubProjects = async () => {
       try {
@@ -60,16 +67,25 @@ function Portfolio() {
           if (dataUser2[i]) combinedData.push(dataUser2[i]);
         }
 
-        // Get languages for each project
-        const projectsWithLanguages = await Promise.all(
-          combinedData.map(async (project: any) => {
+        // Get languages for each project and add a fictitious image
+        const projectsWithLanguagesAndImages = await Promise.all(
+          combinedData.map(async (project, index) => {
             const languageResponse = await fetch(project.languages_url);
             const languages = await languageResponse.json();
-            return { ...project, languages: Object.keys(languages) };
+
+            // Asignar una imagen ficticia cíclicamente
+            const imageIndex = index % fictitiousImages.length; // Ciclo entre 0 y 5
+            const image = fictitiousImages[imageIndex];
+
+            return { 
+              ...project, 
+              languages: Object.keys(languages),
+              image: image // Asignar la imagen correspondiente
+            };
           })
         );
 
-        setProjects(projectsWithLanguages);
+        setProjects(projectsWithLanguagesAndImages);
       } catch (error) {
         console.error("Error fetching GitHub projects:", error);
       }
