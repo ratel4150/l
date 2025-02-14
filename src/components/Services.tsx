@@ -14,8 +14,49 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
-const services = [
-  {
+import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
+const services = [{
+  title: "Desarrollo Web",
+  desc: "Creación de sitios web modernos, responsivos y altamente funcionales.",
+  icon: <WebIcon />,
+  colors: {
+    lightMode: { bgColor: "#e3f2fd", textColor: "#0d47a1" },
+    darkMode: { bgColor: "#1565c0", textColor: "#ffffff" },
+  },
+  detailedInfo: [
+    {
+      subservice: "Desarrollo Frontend",
+      description: "Creación de interfaces de usuario interactivas y atractivas.",
+      tools: ["React", "Angular", "Vue.js", "Tailwind CSS"],
+      estimatedPrice: "$20,000 MXN - $70,000 MXN",
+      estimatedTime: "3-6 semanas",
+      steps: [
+        "Diseñar la estructura y componentes de la interfaz.",
+        "Desarrollar la interfaz utilizando frameworks modernos.",
+        "Optimizar el rendimiento y la compatibilidad con dispositivos.",
+        "Realizar pruebas de usabilidad y accesibilidad.",
+      ],
+      whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20desarrollo%20frontend.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+      facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/frontend",
+    },
+    {
+      subservice: "Desarrollo Backend",
+      description: "Implementación de servidores, APIs y bases de datos robustas.",
+      tools: ["Node.js", "Django", "Spring Boot", "PostgreSQL"],
+      estimatedPrice: "$25,000 MXN - $80,000 MXN",
+      estimatedTime: "4-8 semanas",
+      steps: [
+        "Diseñar la arquitectura del servidor y las APIs.",
+        "Configurar bases de datos y sistemas de almacenamiento.",
+        "Implementar lógica de negocio y seguridad.",
+        "Realizar pruebas de carga y optimización.",
+      ],
+      whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20desarrollo%20backend.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+      facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/backend",
+    },
+  ],
+},
+ /*  {
     title: "Ciberseguridad",
     desc: "Protección avanzada para sistemas y datos.",
     icon: <SecurityIcon />,
@@ -53,6 +94,81 @@ const services = [
         ],
         whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20la%20implementaci%C3%B3n%20de%20firewalls.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
         facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/implementacion-firewalls",
+      },
+    ],
+  }, */
+  {
+    title: "Inteligencia Artificial",
+    desc: "Soluciones avanzadas de IA para optimizar procesos y tomar decisiones inteligentes.",
+    icon: <LightbulbCircleIcon />, // Puedes usar un ícono personalizado o de una librería como Material-UI.
+    colors: {
+      lightMode: { bgColor: "#f3e5f5", textColor: "#4a148c" }, // Colores claros para el modo claro.
+      darkMode: { bgColor: "#6a1b9a", textColor: "#ffffff" }, // Colores oscuros para el modo oscuro.
+    },
+    detailedInfo: [
+      {
+        subservice: "Desarrollo de Modelos de Machine Learning",
+        description: "Creación de modelos predictivos y de clasificación para análisis de datos.",
+        tools: ["TensorFlow", "PyTorch", "Scikit-learn", "Keras"],
+        estimatedPrice: "$30,000 MXN - $100,000 MXN",
+        estimatedTime: "4-8 semanas",
+        steps: [
+          "Definir el problema y los objetivos del modelo.",
+          "Recopilar y preprocesar los datos necesarios.",
+          "Seleccionar y entrenar el algoritmo de Machine Learning adecuado.",
+          "Evaluar el rendimiento del modelo y ajustar hiperparámetros.",
+          "Implementar el modelo en producción y monitorear su desempeño.",
+        ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20el%20desarrollo%20de%20modelos%20de%20Machine%20Learning.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/machine-learning",
+      },
+      {
+        subservice: "Procesamiento de Lenguaje Natural (NLP)",
+        description: "Soluciones de IA para análisis y generación de texto, chatbots y más.",
+        tools: ["spaCy", "NLTK", "Hugging Face Transformers", "GPT-3"],
+        estimatedPrice: "$40,000 MXN - $120,000 MXN",
+        estimatedTime: "6-10 semanas",
+        steps: [
+          "Identificar los casos de uso y los requisitos del cliente.",
+          "Recopilar y limpiar datos de texto relevantes.",
+          "Entrenar modelos de NLP para tareas específicas (clasificación, generación, etc.).",
+          "Implementar el modelo en una aplicación o sistema.",
+          "Realizar pruebas y ajustes para mejorar la precisión.",
+        ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20soluciones%20de%20Procesamiento%20de%20Lenguaje%20Natural.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/nlp",
+      },
+      {
+        subservice: "Visión por Computadora",
+        description: "Desarrollo de sistemas de IA para análisis de imágenes y videos.",
+        tools: ["OpenCV", "YOLO", "TensorFlow Object Detection", "PyTorch Vision"],
+        estimatedPrice: "$50,000 MXN - $150,000 MXN",
+        estimatedTime: "8-12 semanas",
+        steps: [
+          "Definir los requisitos del sistema de visión por computadora.",
+          "Recopilar y etiquetar un conjunto de datos de imágenes o videos.",
+          "Entrenar modelos de detección, clasificación o segmentación.",
+          "Implementar el modelo en un entorno de producción.",
+          "Optimizar el rendimiento para aplicaciones en tiempo real.",
+        ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20soluciones%20de%20Visi%C3%B3n%20por%20Computadora.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/vision-por-computadora",
+      },
+      {
+        subservice: "Sistemas de Recomendación",
+        description: "Desarrollo de algoritmos para personalizar recomendaciones basadas en datos.",
+        tools: ["Surprise", "LightFM", "TensorFlow Recommenders", "Amazon Personalize"],
+        estimatedPrice: "$35,000 MXN - $90,000 MXN",
+        estimatedTime: "5-9 semanas",
+        steps: [
+          "Analizar los datos del usuario y del producto/servicio.",
+          "Seleccionar el enfoque de recomendación (colaborativo, basado en contenido, etc.).",
+          "Entrenar y validar el modelo de recomendación.",
+          "Integrar el sistema de recomendación en la plataforma del cliente.",
+          "Monitorear y ajustar el sistema para mejorar la precisión.",
+        ],
+        whatsAppLink: "https://wa.me/525637303010?text=Estoy%20interesado%20en%20sistemas%20de%20recomendaci%C3%B3n.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n.",
+        facebookShare: "https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com/servicios/sistemas-de-recomendacion",
       },
     ],
   },

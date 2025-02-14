@@ -39,9 +39,9 @@ function Portfolio() {
    console.log(projects);
    
    const fictitiousImages = [
-    "https://picsum.photos/200/300?random=1",
-    "https://picsum.photos/200/300?random=2",
-    "https://picsum.photos/200/300?random=3",
+    "https://www.digitalstudio.pe/wp-content/uploads/2023/04/Diseno-web.webp",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStARjHQxwOz-Rl1y26QoIw_CZQS3Fe71ox_J8ho9MtgljXJPp3P7WkDSMqEEEkA52cM8o&usqp=CAU",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhBMz4eVJ2UItLrqqz_BYj9nmiKebFTjtIXAXV3UnWTFGI8YiXO0EPac62ewpJxUKFE6k&usqp=CAU",
     "https://picsum.photos/200/300?random=4",
     "https://picsum.photos/200/300?random=5",
     "https://picsum.photos/200/300?random=6"
@@ -52,45 +52,59 @@ function Portfolio() {
         // Fetch projects from both users
         const [responseUser1, responseUser2] = await Promise.all([
           fetch("https://api.github.com/users/ratel4150/repos"),
-          fetch("https://api.github.com/users/RiemanNClav/repos")
+          fetch("https://api.github.com/users/RiemanNClav/repos"),
         ]);
-
+  
         const dataUser1 = await responseUser1.json();
         const dataUser2 = await responseUser2.json();
-
+  
         // Combine and alternate the projects from both users
         const combinedData = [];
         const maxLength = Math.max(dataUser1.length, dataUser2.length);
-
+  
         for (let i = 0; i < maxLength; i++) {
           if (dataUser1[i]) combinedData.push(dataUser1[i]);
           if (dataUser2[i]) combinedData.push(dataUser2[i]);
         }
-
-        // Get languages for each project and add a fictitious image
+  
+        // Get languages for each project and add fictitious data
         const projectsWithLanguagesAndImages = await Promise.all(
           combinedData.map(async (project, index) => {
             const languageResponse = await fetch(project.languages_url);
             const languages = await languageResponse.json();
-
+  
             // Asignar una imagen ficticia cíclicamente
             const imageIndex = index % fictitiousImages.length; // Ciclo entre 0 y 5
             const image = fictitiousImages[imageIndex];
-
-            return { 
-              ...project, 
+  
+            // Generar datos ficticios
+            const progress = Math.floor(Math.random() * 100); // Progreso aleatorio entre 0 y 100
+            const description =
+              project.description ||
+              "Este es un proyecto ficticio con fines demostrativos."; // Descripción ficticia si no existe
+            const openIssuesCount = Math.floor(Math.random() * 20); // Issues abiertas aleatorias
+            const stars = Math.floor(Math.random() * 100); // Estrellas aleatorias
+            const forks = Math.floor(Math.random() * 50); // Forks aleatorios
+  
+            return {
+              ...project,
               languages: Object.keys(languages),
-              image: image // Asignar la imagen correspondiente
+              image: image, // Asignar la imagen correspondiente
+              progress, // Progreso ficticio
+              description, // Descripción ficticia
+              open_issues_count: openIssuesCount, // Issues abiertas ficticias
+              stars, // Estrellas ficticias
+              forks, // Forks ficticios
             };
           })
         );
-
+  
         setProjects(projectsWithLanguagesAndImages);
       } catch (error) {
         console.error("Error fetching GitHub projects:", error);
       }
     };
-
+  
     fetchGitHubProjects();
   }, []);
 
@@ -159,7 +173,7 @@ function Portfolio() {
             </Typography>
           </motion.div>
           <Grid container spacing={4}>
-            {projects.slice(0, 6).map((project, index) => (
+            {projects.slice(0, 3).map((project, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
@@ -249,42 +263,102 @@ function Portfolio() {
     <Divider sx={{ mb: 2 }} />
 
     {/* Barra de progreso */}
-    <Box sx={{ mb: 2 }}>
-      <Typography variant="caption" color="text.secondary">
-        Progreso Estimado
+    <Box sx={{ mb: 3 }}>
+  {/* Título */}
+  <Typography
+    variant="caption"
+    sx={{
+      display: "block",
+      fontWeight: 500,
+      color: darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.6)",
+      mb: 1,
+    }}
+  >
+    Progreso Estimado
+  </Typography>
+
+  {/* Barra de progreso */}
+  <Box
+    sx={{
+      position: "relative",
+      width: "100%",
+      height: 12,
+      borderRadius: 6,
+      overflow: "hidden",
+      backgroundColor: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+      boxShadow: darkMode
+        ? "inset 0 1px 2px rgba(0, 0, 0, 0.2)"
+        : "inset 0 1px 2px rgba(255, 255, 255, 0.2)",
+    }}
+  >
+    {/* Barra de progreso interna */}
+    <LinearProgress
+      variant="determinate"
+      value={project.progress}
+      sx={{
+        height: "100%",
+        borderRadius: 6,
+        backgroundColor: "transparent",
+        "& .MuiLinearProgress-bar": {
+          borderRadius: 6,
+          backgroundColor:
+            project.progress < 30
+              ? "#ff4444" // Rojo para progreso bajo
+              : project.progress < 70
+              ? "#ffbb33" // Amarillo para progreso medio
+              : "#00C851", // Verde para progreso alto
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+        },
+      }}
+    />
+
+    {/* Texto de porcentaje */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+      }}
+    >
+      {/* Ícono de progreso */}
+      <Box
+        sx={{
+          width: 16,
+          height: 16,
+          borderRadius: "50%",
+          backgroundColor:
+            project.progress < 30
+              ? "#ff4444"
+              : project.progress < 70
+              ? "#ffbb33"
+              : "#00C851",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+        }}
+      />
+
+      {/* Texto del porcentaje */}
+      <Typography
+        variant="body2"
+        sx={{
+          fontWeight: 600,
+          color:
+            project.progress < 30
+              ? "#ff4444"
+              : project.progress < 70
+              ? "#ffbb33"
+              : "#00C851",
+          textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        {`${Math.round(project.progress)}%`}
       </Typography>
-      <Box sx={{ position: "relative", mt: 1 }}>
-        <LinearProgress
-          variant="determinate"
-          value={project.progress}
-          sx={{
-            height: 10,
-            borderRadius: 6,
-            bgcolor: "grey.200",
-            "& .MuiLinearProgress-bar": {
-              bgcolor:
-                project.progress < 30
-                  ? "error.main"
-                  : project.progress < 70
-                  ? "warning.main"
-                  : "success.main",
-            },
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            fontWeight: 600,
-            color: "text.primary",
-          }}
-        >
-          {`${Math.round(project.progress)}%`}
-        </Box>
-      </Box>
     </Box>
+  </Box>
+</Box>
 
     {/* Estadísticas clave */}
     <Grid container spacing={2} sx={{ mb: 2 }}>

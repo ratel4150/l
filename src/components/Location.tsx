@@ -58,11 +58,22 @@ export const Location = () => {
       <Grid container spacing={4} justifyContent="center">
         {/* Sección del Mapa */}
         <Grid item xs={12} md={6} display="flex" justifyContent="center">
-          <StaticGoogleMap size={mapSize} apiKey={googleMapsApiKey} zoom="11">
-        {locations.map((loc, index) => (
-          <Marker key={index} location={`${loc.latitude},${loc.longitude}`} />
-        ))}
-      </StaticGoogleMap>
+        <Paper
+            elevation={6}
+            sx={{
+              borderRadius: 3,
+              overflow: 'hidden', // Para que el mapa no sobresalga del Paper
+              backgroundColor: darkMode ? "#333" : "#fff",
+              transition: "0.3s",
+              "&:hover": { boxShadow: darkMode ? "0px 4px 12px rgba(255,255,255,0.1)" : "0px 4px 12px rgba(0,0,0,0.1)" },
+            }}
+          >
+            <StaticGoogleMap size={mapSize} apiKey={googleMapsApiKey} zoom="11">
+              {locations.map((loc, index) => (
+                <Marker key={index} location={`${loc.latitude},${loc.longitude}`} />
+              ))}
+            </StaticGoogleMap>
+          </Paper>
         </Grid>
 
         {/* Sección de Información */}
